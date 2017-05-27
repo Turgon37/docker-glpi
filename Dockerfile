@@ -1,7 +1,11 @@
 FROM alpine:3.6
 MAINTAINER Pierre GINDRAUD <pgindraud@gmail.com>
 
-ENV GLPI_VERSION=9.1.3
+ENV GLPI_VERSION=9.1.3 \
+    GLPI_ROOT="/var/www" \
+    GLPI_REMOVE_INSTALLER=no \
+    GLPI_PLUGINS=""
+#   GLPI_PLUGINS="fusioninventory|https://github.com/fusioninventory/fusioninventory-for-glpi/releases/download/glpi9.1%2B1.1/fusioninventory-for-glpi_9.1.1.1.tar.gz"
 
 # Install dependencies
 RUN apk --no-cache add \
@@ -27,15 +31,13 @@ RUN apk --no-cache add \
 
 # Install phppadmin sources
     mkdir -p /run/nginx && \
-    mkdir -p /var/www && \
-    adduser -h /var/www -g 'Web Application User' -S -D -H -G www-data www-data && \
-    cd /var/www && \
+    mkdir -p "${GLPI_ROOT}" && \
+    adduser -h "${GLPI_ROOT}" -g 'Web Application User' -S -D -H -G www-data www-data && \
+    cd "${GLPI_ROOT}" && \
     curl -O -L "https://github.com/glpi-project/glpi/releases/download/${GLPI_VERSION}/glpi-${GLPI_VERSION}.tgz" && \
     tar -xzf "glpi-${GLPI_VERSION}.tgz" --strip 1 && \
     rm "glpi-${GLPI_VERSION}.tgz" && \
-    rm -rf AUTHORS.txt CHANGELOG.txt LISEZMOI.txt README.md && \
-# Remove dependencies
-    apk --no-cache del curl tar
+    rm -rf AUTHORS.txt CHANGELOG.txt LISEZMOI.txt README.md
 
 # Add some configurations files
 COPY root/ /
@@ -55,6 +57,6 @@ RUN sed -i -e "s|;daemonize\s*=\s*yes|daemonize = no|g" /etc/php5/php-fpm.conf &
 
 EXPOSE 80
 VOLUME ["/var/www/files", "/var/www/config"]
-WORKDIR /var/www
+WORKDIR "${GLPI_ROOT}"
 
-CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
+CMD ["/start.sh"]
