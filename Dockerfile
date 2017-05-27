@@ -20,6 +20,7 @@ RUN apk --no-cache add \
     php5-mysqli \
     php5-openssl \
     php5-zlib \
+    php-apcu \
     supervisor \
     tar && \
 
