@@ -21,9 +21,10 @@ This images contains an instance of GLPI web application served by nginx on port
 
    * The following volume is exposed by this image
 
-| Volume                     | Usage                                                 |
-| -------------------------- | ----------------------------------------------------- |
-| /var/www/files             | The data path of GLPI                                 |
+| Volume             | Usage                                            |
+| ------------------ | ------------------------------------------------ |
+| /var/www/files     | The data path of GLPI                            |
+| /var/www/config    | The configuration path of GLPI                   |
 
 ## Installation
 
@@ -44,5 +45,5 @@ docker pull turgon37/glpi
 ## Usage
 
 ```
-docker run -p 8000:80 -v data-glpi:/var/www/files turgon37/glpi
+docker run -p 8000:80 -v data-glpi:/var/www/files -v data-glpi-config:/var/www/config turgon37/glpi
 ```
