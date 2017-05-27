@@ -31,7 +31,7 @@ RUN apk --no-cache add \
     curl -O -L "https://github.com/glpi-project/glpi/releases/download/${GLPI_VERSION}/glpi-${GLPI_VERSION}.tgz" && \
     tar -xzf "glpi-${GLPI_VERSION}.tgz" --strip 1 && \
     rm "glpi-${GLPI_VERSION}.tgz" && \
-    rm -rf AUTHORS.txt CHANGELOG.txt COPYING.txt LISEZMOI.txt README.md && \
+    rm -rf AUTHORS.txt CHANGELOG.txt LISEZMOI.txt README.md && \
 # Remove dependencies
     apk --no-cache del curl tar
 
