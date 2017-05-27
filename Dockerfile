@@ -5,24 +5,25 @@ ENV GLPI_VERSION=9.1.3
 
 # Install dependencies
 RUN apk --no-cache add \
-    curl \
-    nginx \
-    php5 \
-    php5-curl \
-    php5-ctype \
-    php5-dom \
-    php5-fpm \
-    php5-gd \
-    php5-imap \
-    php5-json \
-    php5-ldap \
-    php5-pdo_mysql \
-    php5-mysqli \
-    php5-openssl \
-    php5-zlib \
-    php-apcu \
-    supervisor \
-    tar && \
+      curl \
+      nginx \
+      php5 \
+      php5-curl \
+      php5-ctype \
+      php5-dom \
+      php5-fpm \
+      php5-gd \
+      php5-imap \
+      php5-json \
+      php5-ldap \
+      php5-pdo_mysql \
+      php5-mysqli \
+      php5-openssl \
+      php5-zlib \
+      supervisor \
+      tar && \
+    apk --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/v3.5/main/ add \
+      php5-apcu && \
 
 # Install phppadmin sources
     mkdir -p /run/nginx && \
