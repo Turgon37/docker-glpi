@@ -55,7 +55,7 @@ RUN sed -i -e "s|;daemonize\s*=\s*yes|daemonize = no|g" /etc/php5/php-fpm.conf &
     chown -R www-data:www-data /var/www && \
     chmod -R g=rX,o=--- /var/www
 
-EXPOSE 80
+EXPOSE 80/tcp
 VOLUME ["/var/www/files", "/var/www/config"]
 WORKDIR "${GLPI_ROOT}"
 
