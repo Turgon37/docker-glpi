@@ -25,7 +25,7 @@ for i in ${GLPI_PLUGINS}; do
   # Download plugin source if not exists
   if [ ! -f "$file" ]; then
     echo "..downloading plugin '$plugin' from '$url'"
-    curl --trace-ascii -o "$file" -L "$url"
+    curl -o "$file" -L "$url"
   fi
   
   # extract the archive according to the extension
