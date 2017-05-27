@@ -53,5 +53,6 @@ RUN sed -i -e "s|;daemonize\s*=\s*yes|daemonize = no|g" /etc/php5/php-fpm.conf &
 
 EXPOSE 80
 VOLUME ["/var/www/files", "/var/www/config"]
+WORKDIR /var/www
 
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
