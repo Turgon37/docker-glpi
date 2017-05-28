@@ -24,9 +24,9 @@ The GLPI_PLUGINS variable must contains the list of plugins to install (download
 This variable is a space separated list of plugins definitions. Each plugin definition must be like this "PLUGINNAME|URL".
 The PLUGINNAME is the name of the first folder in plugin archive.
 The URL is the full URL from which to download the plugin.
-Theses two item are separated by an underscore.
+Theses two items are separated by a pipe symbol.
 
-As a syntax skeleton, the GLPI_PLUGINS variable must be GLPI_PLUGINS="NAME1|URL1 NAME2|URL2"
+The GLPI_PLUGINS variable must follow the following skeleton GLPI_PLUGINS="NAME1|URL1 NAME2|URL2"
 For better example see at the end of this file.
 
 
