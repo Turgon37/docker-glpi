@@ -6,6 +6,8 @@
 
 This images contains an instance of GLPI web application served by nginx and php5-fpm on port 80
 
+:warning: Take care of the [changelogs](CHANGELOG.md) because some breaking changes may happend between versions.
+
 ## Docker Informations
 
 * This image expose the following port
