@@ -1,15 +1,23 @@
 #!/usr/bin/env bash
 
-# GLOBAL SETTINGS
+## Global settings
 # docker hub username
 DOCKER_USERNAME="${DOCKER_USERNAME:-turgon37}"
 # image name
 DOCKER_IMAGE="${DOCKER_USERNAME}/${DOCKER_IMAGE:-glpi}"
+#
+MASTER_BRANCH=master
 
 ## Local settings
 build_tags_file="${PWD}/build.sh~tags"
 
+docker_tag_prefix=
+if [ "${VCS_BRANCH}" != "${MASTER_BRANCH}"]; then
+  docker_tag_prefix="${VCS_BRANCH}-"
+fi
+
 ## Settings initialization
+set -e
 
 # If empty version, fetch the latest from repository
 if [ -z "$GLPI_VERSION" ]; then
@@ -36,18 +44,18 @@ docker build --build-arg VCS_REF="${VCS_REF}" \
              --build-arg IMAGE_VERSION="$image_version" \
              --build-arg GLPI_VERSION="$GLPI_VERSION" \
              --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` \
-             --tag ${DOCKER_IMAGE}:${GLPI_VERSION} \
+             --tag "${DOCKER_IMAGE}:${docker_tag_prefix}${GLPI_VERSION}" \
              --file Dockerfile \
              .
 
 ## Image taaging
-echo "${DOCKER_IMAGE}:${GLPI_VERSION}" > ${build_tags_file}
+echo "${DOCKER_IMAGE}:${docker_tag_prefix}${GLPI_VERSION}" > ${build_tags_file}
 
 # Tag images
 for tag in $DOCKER_IMAGE_TAGS; do
   if [ -n "$tag" ]; then
-    docker tag "${DOCKER_IMAGE}:${GLPI_VERSION}" "${DOCKER_IMAGE}:${tag}"
-    echo "${DOCKER_IMAGE}:${tag}" >> ${build_tags_file}
+    docker tag "${DOCKER_IMAGE}:${docker_tag_prefix}${GLPI_VERSION}" "${DOCKER_IMAGE}:${docker_tag_prefix}${tag}"
+    echo "${DOCKER_IMAGE}:${docker_tag_prefix}${tag}" >> ${build_tags_file}
   fi
 done
 
