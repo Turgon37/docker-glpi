@@ -12,7 +12,6 @@ env:
 
 script:
   - export VCS_REF=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo $TRAVIS_COMMIT; else echo $TRAVIS_PULL_REQUEST_SHA; fi)
-  - echo "VCS_REF"
 
   # 
   # Build docker image
