@@ -8,6 +8,7 @@ MASTER_BRANCH=${MASTER_BRANCH:-master}
 build_tags_file="${PWD}/build.sh~tags"
 
 ## Init conditions
+# For branch others than the production one, only build one container with the latest glpi version
 [ -n "${GLPI_VERSION}" -a "${VCS_BRANCH}" != "${MASTER_BRANCH}" ] && exit 0
 
 ## Deploy
@@ -17,7 +18,7 @@ echo "$DOCKERHUB_REGISTRY_PASSWORD" | docker login --username="$DOCKERHUB_REGIST
 # push each built images
 for image in `cat "${build_tags_file}"`; do
   echo "-> push ${image}"
-  #docker push $image
+  docker push $image
 done
 
 # Unauthenticate to docker hub
