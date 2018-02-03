@@ -29,7 +29,7 @@ RUN apk --no-cache add \
     apk --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/v3.5/main/ add \
       php5-apcu && \
 
-# Install phppadmin sources
+# Install GLPI sources
     mkdir -p /run/nginx && \
     mkdir -p "${GLPI_ROOT}" && \
     adduser -h "${GLPI_ROOT}" -g 'Web Application User' -S -D -H -G www-data www-data && \
