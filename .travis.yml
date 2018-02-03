@@ -6,9 +6,11 @@ services:
   - docker
 
 env:
-  # Provide a list of GLPI version to build
-  - GLPI_VERSION=""
-  - GLPI_VERSION=9.1.3
+  global: []
+  matrix:
+    # Provide a list of GLPI version to build
+    - GLPI_VERSION=""
+    - GLPI_VERSION=9.1.3
 
 script:
   - export VCS_REF=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo $TRAVIS_COMMIT; else echo $TRAVIS_PULL_REQUEST_SHA; fi)
@@ -21,3 +23,10 @@ script:
   #
   ## Run tests
   #
+
+  #
+  # Deploy
+  #
+  - '[ "$TRAVIS_PULL_REQUEST" == "false" ] || exit 0'
+  - '[ "$TRAVIS_SECURE_ENV_VARS" == "true" -a  -n "$DOCKERHUB_REGISTRY_USERNAME" -a -n "$DOCKERHUB_REGISTRY_PASSWORD" ]'
+  - echo "$DOCKERHUB_REGISTRY_PASSWORD" | docker login --username="$DOCKERHUB_REGISTRY_USERNAME" --password-stdin
