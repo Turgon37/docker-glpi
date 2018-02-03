@@ -26,9 +26,12 @@ if [ -z "$VCS_REF" ]; then
 fi
 echo "-> current vcs reference ${VCS_REF}"
 
+echo "-> working with tags $DOCKER_IMAGE_TAGS"
+
 image_version=`cat VERSION`
 echo "-> building ${DOCKER_IMAGE} with image version: ${image_version}"
 
+## Build image
 docker build --build-arg VCS_REF="${VCS_REF}" \
              --build-arg IMAGE_VERSION="$image_version" \
              --build-arg GLPI_VERSION="$GLPI_VERSION" \
@@ -36,14 +39,17 @@ docker build --build-arg VCS_REF="${VCS_REF}" \
              --tag ${DOCKER_IMAGE}:${GLPI_VERSION} \
              --file Dockerfile \
              .
+
+## Image taaging
 echo "${DOCKER_IMAGE}:${GLPI_VERSION}" > ${build_tags_file}
 
 # Tag images
 for tag in $DOCKER_IMAGE_TAGS; do
   if [ -n "$tag" ]; then
     docker tag "${DOCKER_IMAGE}:${GLPI_VERSION}" "${DOCKER_IMAGE}:${tag}"
-    echo "${DOCKER_IMAGE}:${GLPI_VERSION}" >> ${build_tags_file}
+    echo "${DOCKER_IMAGE}:${tag}" >> ${build_tags_file}
   fi
 done
 
+echo "-> produced following image names"
 cat "${build_tags_file}"
