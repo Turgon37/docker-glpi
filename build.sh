@@ -14,6 +14,7 @@ docker_tag_prefix=
 
 ## Settings initialization
 set -e
+set -v
 
 # If empty version, fetch the latest from repository
 if [ -z "$GLPI_VERSION" ]; then
