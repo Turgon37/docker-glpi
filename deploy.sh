@@ -1,10 +1,14 @@
 #!/usr/bin/env bash
 
+## Global settings
+# "production" branch
+MASTER_BRANCH=${MASTER_BRANCH:-master}
+
 ## Local settings
 build_tags_file="${PWD}/build.sh~tags"
 
 ## Init conditions
-
+[ -n "${GLPI_VERSION}" -a "${VCS_BRANCH}" != "${MASTER_BRANCH}" ] && exit 0
 
 ## Deploy
 # Authenticate to docker hub

@@ -5,8 +5,8 @@
 DOCKER_USERNAME="${DOCKER_USERNAME:-turgon37}"
 # image name
 DOCKER_IMAGE="${DOCKER_USERNAME}/${DOCKER_IMAGE:-glpi}"
-#
-MASTER_BRANCH=master
+# "production" branch
+MASTER_BRANCH=${MASTER_BRANCH:-master}
 
 ## Local settings
 build_tags_file="${PWD}/build.sh~tags"
