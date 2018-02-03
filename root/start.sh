@@ -70,7 +70,7 @@ fi
 if [ ! -z "${GLPI_PLUGINS}" ]; then
   echo "..#WARNING# GLPI_PLUGINS is deprecated use the new GLPI_INSTALL_PLUGINS instead" 1>&2
   for item in ${GLPI_PLUGINS}; do
-    plugin="${item%|*}"
+    name="${item%|*}"
     url="${item#*|}"
     installPlugin "${name}" "${url}"
   done
