@@ -18,6 +18,9 @@ script:
   - export VCS_REF=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo $TRAVIS_COMMIT; else echo $TRAVIS_PULL_REQUEST_SHA; fi)
   - export VCS_BRANCH=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo $TRAVIS_BRANCH; else echo $TRAVIS_PULL_REQUEST_BRANCH; fi)
 
+  # Download tools shim.
+  - wget -O ${PWD}/_tools.sh https://gist.github.com/Turgon37/2ba8685893807e3637ea3879ef9d2062/raw
+
   # 
   # Build docker image
   #
@@ -26,11 +29,11 @@ script:
   #
   ## Run tests
   #
-  - ${PWD}/tests.sh
+  - ${PWD}/tests.sh && touch _test_ok
 
   #
   # Deploy
   #
   - '[ "$TRAVIS_PULL_REQUEST" == "false" ] || exit 0'
   - '[ "$TRAVIS_SECURE_ENV_VARS" == "true" -a  -n "$DOCKERHUB_REGISTRY_USERNAME" -a -n "$DOCKERHUB_REGISTRY_PASSWORD" ]'
-  - ${PWD}/deploy.sh
+  - '[ -f _test_ok ] && ${PWD}/deploy.sh'
