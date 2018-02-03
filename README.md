@@ -16,12 +16,12 @@ This images contains an instance of GLPI web application served by nginx and php
 
  * This image takes theses environnements variables as parameters
 
-| Environment           | Type             | Usage                                                                    |
-| ----------------------|----------------- | ------------------------------------------------------------------------ |
-| GLPI_REMOVE_INSTALLER | Boolean (yes/no) | Set to yes if it's not the first installation of glpi                    |
-| GLPI_CHMOD_FILES      | Boolean (yes/no) | Set to yes to apply chmod/chown on /var/www/files (useful for host mount)|
+| Environment            | Type             | Usage                                                                    |
+| -----------------------|----------------- | ------------------------------------------------------------------------ |
+| GLPI_REMOVE_INSTALLER  | Boolean (yes/no) | Set to yes if it's not the first installation of glpi                    |
+| GLPI_CHMOD_PATHS_FILES | Boolean (yes/no) | Set to yes to apply chmod/chown on /var/www/files (useful for host mount)|
 | (deprecated) GLPI_PLUGINS          | String           | (will be removed on 3.0) Space separated list of plugins to install (see below)                                    |
-| GLPI_INSTALL_PLUGINS  | String           | Comma separated list of plugins to install (see below)                                    |
+| GLPI_INSTALL_PLUGINS   | String           | Comma separated list of plugins to install (see below)                                    |
 
 
 The GLPI_INSTALL_PLUGINS variable must contains the list of plugins to install (download) before start glpi.
