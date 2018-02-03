@@ -2,7 +2,7 @@
 
 set -e
 
-basedir="${GLPI_ROOT}"
+basedir="${GLPI_PATHS_ROOT}"
 
 ## Install plugins
 
