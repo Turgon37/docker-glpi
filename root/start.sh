@@ -83,7 +83,7 @@ fi
 cd -
 
 # address issue https://github.com/Turgon37/docker-glpi/issues/2
-if [ "x${GLPI_CHMOD_FILES}" = 'xyes' ]; then
+if [ "x${GLPI_CHMOD_PATHS_FILES}" = 'xyes' ]; then
   chown -R www-data:www-data "${basedir}/files"
   chmod -R u=rwX,g=rX,o=--- "${basedir}/files"
 fi
