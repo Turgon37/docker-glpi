@@ -94,8 +94,9 @@ echo '-> 6 Test web access'
 image_name=glpi_6
 docker run $docker_run_options --name "${image_name}" --publish 8000:80 "${image}"
 wait_for_string_in_container_logs "${image_name}" 'nginx entered RUNNING state'
+sleep 4
 #test
-if ! curl -v http://localhost:8000 | grep --quiet 'install/install.php'; then
+if ! curl -v http://localhost:8000 2>&1 | grep --quiet 'install/install.php'; then
   docker logs "${image_name}"
   false
 fi
