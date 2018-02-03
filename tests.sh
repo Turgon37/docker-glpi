@@ -3,38 +3,12 @@
 ## Local settings
 build_tags_file="${PWD}/build.sh~tags"
 docker_run_options='--detach'
-docker_wait_for_logs_default_attempt=5
-
-## Define tools
-# Wait for a container to be up by checking regularly its logs for a pattern
-# param1 : the container name
-# param2 : the string to search for in logs
-function wait_for_string_in_container_logs() {
-  [ -n "${1}" -a -n "${2}" ]
-  attempt=0
-  while [ $attempt -le $docker_wait_for_logs_default_attempt ]; do
-    attempt=$(( $attempt + 1 ))
-    echo "-> Waiting for container "${1}" to be up (attempt: ${attempt})..."
-    if docker logs "${1}" | grep --quiet "${2}"; then
-      echo "-> Container ${1} is up"
-      break
-    fi
-    sleep 4
-  done
-}
-
-# Stop and remove properly a container
-# param1 : the container name
-function stop_and_remove_container() {
-  [ -n "${1}" ]
-  docker stop "${1}" > /dev/null
-  docker rm --volumes "${1}" > /dev/null
-  echo "-> Container ${1} is stopped and removed"
-}
 
 ## Settings initialization
 set -e
 set -x
+
+source ${PWD}/_tools.sh
 
 ## Tests
 
