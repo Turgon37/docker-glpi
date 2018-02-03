@@ -1,7 +1,8 @@
-FROM alpine:3.6
-MAINTAINER Pierre GINDRAUD <pgindraud@gmail.com>
+FROM alpine:3.7
 
-ENV GLPI_VERSION=9.1.3 \
+LABEL maintainer="Pierre GINDRAUD <pgindraud@gmail.com>"
+
+ENV GLPI_VERSION=9.2.1 \
     GLPI_ROOT="/var/www" \
     GLPI_REMOVE_INSTALLER=no \
     GLPI_PLUGINS=""
