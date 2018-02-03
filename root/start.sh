@@ -86,16 +86,24 @@ if [ "x${GLPI_REMOVE_INSTALLER}" = 'xyes' ]; then
 fi
 
 
+## Files structure
+echo "Create file structure..."
+for f in _cron _dumps _graphs _lock _log _pictures _plugins _rss _sessions _tmp _uploads; do
+  if [ ! -d "${basedir}/files/${f}" ]; then
+    mkdir -p "${basedir}/files/${f}"
+    chown www-data:www-data "${basedir}/files/${f}"
+    chmod u=rwX,g=rwX,o=--- "${basedir}/files/${f}"
+  fi
+done
+
+
 ## Files permissions
 echo "Set files permissions..."
 # address issue https://github.com/Turgon37/docker-glpi/issues/2
 if [ "x${GLPI_CHMOD_PATHS_FILES}" = 'xyes' ]; then
-  chown -R www-data:www-data "${basedir}/files"
-  chmod -R u=rwX,g=rX,o=--- "${basedir}/files"
+  chown -R www-data:www-data "${basedir}/files/*/*"
+  chmod -R u=rwX,g=rX,o=--- "${basedir}/files/*/*"
 fi
-# global perms
-chown www-data:www-data "${basedir}/files"
-chmod u=rwX,g=rwX,o=--- "${basedir}/files"
 
 ## Start
 echo "Starting up..."
