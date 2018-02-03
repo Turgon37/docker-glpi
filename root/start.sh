@@ -88,11 +88,12 @@ fi
 
 ## Files structure
 echo "Create file structure..."
-for f in _cron _dumps _graphs _lock _log _pictures _plugins _rss _sessions _tmp _uploads; do
-  if [ ! -d "${basedir}/files/${f}" ]; then
-    mkdir -p "${basedir}/files/${f}"
-    chown www-data:www-data "${basedir}/files/${f}"
-    chmod u=rwX,g=rwX,o=--- "${basedir}/files/${f}"
+for f in _cache _cron _dumps _graphs _lock _log _pictures _plugins _rss _sessions _tmp _uploads; do
+  dir="${basedir}/files/${f}"
+  if [ ! -d "${dir}" ]; then
+    mkdir -p "${dir}"
+    chown www-data:www-data "${dir}"
+    chmod u=rwX,g=rwX,o=--- "${dir}"
   fi
 done
 
