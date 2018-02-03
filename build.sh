@@ -12,7 +12,7 @@ MASTER_BRANCH=master
 build_tags_file="${PWD}/build.sh~tags"
 
 docker_tag_prefix=
-if [ "${VCS_BRANCH}" != "${MASTER_BRANCH}"]; then
+if [ "${VCS_BRANCH}" != "${MASTER_BRANCH}" ]; then
   docker_tag_prefix="${VCS_BRANCH}-"
 fi
 
