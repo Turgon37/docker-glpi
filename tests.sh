@@ -6,6 +6,7 @@ docker_run_options='--detach --rm'
 
 ## Settings initialization
 set -e
+set -x
 
 ## Tests
 
