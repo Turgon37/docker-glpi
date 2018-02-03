@@ -1,0 +1,19 @@
+---
+language: bash
+
+# Tell Travis to start Docker when it brings up an environment.
+services:
+  - docker
+
+#env:
+  # Provide a list of OSes we want to use for testing.
+
+script:
+  # 
+  # Build docker image
+  #
+  - ${PWD}/build.sh
+
+  #
+  ## Run tests
+  #
