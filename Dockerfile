@@ -3,11 +3,12 @@ FROM alpine:3.7
 LABEL maintainer="Pierre GINDRAUD <pgindraud@gmail.com>"
 
 ENV GLPI_VERSION=9.2.1 \
-    GLPI_ROOT="/var/www" \
+    GLPI_PATHS_ROOT="/var/www" \
+    GLPI_PATHS_PLUGINS="${GLPI_PATHS_ROOT}/plugins" \
     GLPI_REMOVE_INSTALLER=no \
     GLPI_CHMOD_FILES=no \
-    GLPI_PLUGINS=""
-#   GLPI_PLUGINS="fusioninventory|https://github.com/fusioninventory/fusioninventory-for-glpi/releases/download/glpi9.1%2B1.1/fusioninventory-for-glpi_9.1.1.1.tar.gz"
+    GLPI_INSTALL_PLUGINS=""
+#   GLPI_INSTALL_PLUGINS="fusioninventory|https://github.com/fusioninventory/fusioninventory-for-glpi/releases/download/glpi9.2%2B1.0/glpi-fusioninventory-9.2.1.0.tar.bz2"
 
 # Install dependencies
 RUN apk --no-cache add \
