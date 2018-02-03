@@ -15,7 +15,7 @@ function wait_for_string_in_container_logs() {
   while [ $attempt -le $docker_wait_for_logs_default_attempt ]; do
     attempt=$(( $attempt + 1 ))
     echo "-> Waiting for container "${1}" to be up (attempt: ${attempt})..."
-    if docker logs "$1" | grep --quiet 'Starting up...'; then
+    if docker logs "${1}" | grep --quiet "${2}"; then
       echo "-> Container ${1} is up"
       break
     fi
