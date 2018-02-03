@@ -63,10 +63,10 @@ cd "${GLPI_PATHS_PLUGINS}" > /dev/null
 if [ ! -z "${GLPI_INSTALL_PLUGINS}" ]; then
   OLDIFS=$IFS
   IFS=','
-  for plugin in ${GLPI_INSTALL_PLUGINS}; do
+  for item in ${GLPI_INSTALL_PLUGINS}; do
     IFS=$OLDIFS
-    name="${i%|*}"
-    url="${i#*|}"
+    name="${item%|*}"
+    url="${item#*|}"
     installPlugin "${name}" "${url}"
   done
 fi
@@ -74,9 +74,9 @@ fi
 # Old deprecated plugins settings
 if [ ! -z "${GLPI_PLUGINS}" ]; then
   echo "..#WARNING# GLPI_PLUGINS is deprecated use the new GLPI_INSTALL_PLUGINS instead" 1>&2
-  for i in ${GLPI_PLUGINS}; do
-    plugin="${i%|*}"
-    url="${i#*|}"
+  for item in ${GLPI_PLUGINS}; do
+    plugin="${item%|*}"
+    url="${item#*|}"
     installPlugin "${name}" "${url}"
   done
 fi
