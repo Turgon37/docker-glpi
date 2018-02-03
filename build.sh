@@ -10,11 +10,7 @@ MASTER_BRANCH=master
 
 ## Local settings
 build_tags_file="${PWD}/build.sh~tags"
-
 docker_tag_prefix=
-if [ "${VCS_BRANCH}" != "${MASTER_BRANCH}" ]; then
-  docker_tag_prefix="${VCS_BRANCH}-"
-fi
 
 ## Settings initialization
 set -e
@@ -34,7 +30,13 @@ if [ -z "$VCS_REF" ]; then
 fi
 echo "-> current vcs reference ${VCS_REF}"
 
-echo "-> working with tags $DOCKER_IMAGE_TAGS"
+# Set the docker image tag prefix
+if [ "${VCS_BRANCH}" != "${MASTER_BRANCH}" ]; then
+  docker_tag_prefix="${VCS_BRANCH}-"
+fi
+echo "-> working with tags prefix ${docker_tag_prefix}"
+
+echo "-> working with tags ${DOCKER_IMAGE_TAGS}"
 
 image_version=`cat VERSION`
 echo "-> building ${DOCKER_IMAGE} with image version: ${image_version}"
