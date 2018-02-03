@@ -2,7 +2,7 @@
 
 set -e
 
-basedir="${GLPI_ROOT}"
+basedir="${GLPI_PATHS_ROOT}"
 
 ## Install plugins
 
@@ -86,14 +86,25 @@ if [ "x${GLPI_REMOVE_INSTALLER}" = 'xyes' ]; then
 fi
 
 
+## Files structure
+echo "Create file structure..."
+for f in _cache _cron _dumps _graphs _lock _log _pictures _plugins _rss _sessions _tmp _uploads; do
+  dir="${basedir}/files/${f}"
+  if [ ! -d "${dir}" ]; then
+    mkdir -p "${dir}"
+    chown www-data:www-data "${dir}"
+    chmod u=rwX,g=rwX,o=--- "${dir}"
+  fi
+done
+
+
 ## Files permissions
 echo "Set files permissions..."
 # address issue https://github.com/Turgon37/docker-glpi/issues/2
 if [ "x${GLPI_CHMOD_PATHS_FILES}" = 'xyes' ]; then
-  chown -R www-data:www-data "${basedir}/files"
-  chmod -R u=rwX,g=rX,o=--- "${basedir}/files"
+  chown -R www-data:www-data "${basedir}/files/*/*"
+  chmod -R u=rwX,g=rX,o=--- "${basedir}/files/*/*"
 fi
-
 
 ## Start
 echo "Starting up..."
