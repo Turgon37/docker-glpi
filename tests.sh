@@ -13,13 +13,21 @@ function wait_for_string_in_container_logs() {
   attempt=0
   while [ $attempt -le $docker_wait_for_logs_default_attempt ]; do
     attempt=$(( $attempt + 1 ))
-    echo "Waiting for container "${1}" to be up (attempt: ${attempt})..."
+    echo "-> Waiting for container "${1}" to be up (attempt: ${attempt})..."
     if docker logs "$1" | grep --quiet 'Starting up...'; then
-      echo "Container ${1} is up"
+      echo "-> Container ${1} is up"
       break
     fi
     sleep 2
   done
+}
+
+# Stop and remove properly a container
+# param1 : the container name
+function stop_and_remove_container() {
+  docker stop "${1}" > /dev/null
+  docker rm --link --volumes "${1}" /dev/null
+  echo "-> Container ${1} is stopped and removed"
 }
 
 ## Settings initialization
@@ -49,7 +57,7 @@ if ! docker exec "${image_name}" test -d plugins/fusioninventory; then
   docker logs "${image_name}"
   false
 fi
-docker stop "${image_name}" && docker rm "${image_name}"
+stop_and_remove_container "${image_name}"
 
 
 #4 Test plugins installation with tar.gz
@@ -61,7 +69,7 @@ if ! docker exec "${image_name}" test -d plugins/fusioninventory; then
   docker logs "${image_name}"
   false
 fi
-docker stop "${image_name}" && docker rm "${image_name}"
+stop_and_remove_container "${image_name}"
 
 
 #5 Test plugins installation with old variable
@@ -73,16 +81,16 @@ if ! docker exec "${image_name}" test -d plugins/fusioninventory; then
   docker logs "${image_name}"
   false
 fi
-docker stop "${image_name}" && docker rm "${image_name}"
+stop_and_remove_container "${image_name}"
 
 
 #6 Test web access
 echo '-> 6 Test web access'
 image_name=glpi_6
 docker run $docker_run_options --name "${image_name}" --publish 8000:80 "${image}"
-wait_for_string_in_container_logs "${image_name}" 'ready to handle connections'
+wait_for_string_in_container_logs "${image_name}" 'nginx entered RUNNING state'
 if ! curl -v http://localhost:8000 | grep --quiet 'install/install.php'; then
   docker logs "${image_name}"
   false
 fi
-docker stop "${image_name}" && docker rm "${image_name}"
+stop_and_remove_container "${image_name}"
