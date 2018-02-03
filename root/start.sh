@@ -75,7 +75,7 @@ if [ ! -z "${GLPI_PLUGINS}" ]; then
     installPlugin "${name}" "${url}"
   done
 fi
-cd -
+cd - > /dev/null
 
 
 ## Remove installer
