@@ -93,7 +93,9 @@ if [ "x${GLPI_CHMOD_PATHS_FILES}" = 'xyes' ]; then
   chown -R www-data:www-data "${basedir}/files"
   chmod -R u=rwX,g=rX,o=--- "${basedir}/files"
 fi
-
+# global perms
+chown www-data:www-data "${basedir}/files"
+chmod u=rwX,g=rwX,o=--- "${basedir}/files"
 
 ## Start
 echo "Starting up..."
