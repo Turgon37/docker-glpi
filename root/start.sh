@@ -102,8 +102,8 @@ done
 echo "Set files permissions..."
 # address issue https://github.com/Turgon37/docker-glpi/issues/2
 if [ "x${GLPI_CHMOD_PATHS_FILES}" = 'xyes' ]; then
-  chown -R www-data:www-data "${basedir}/files/*/*"
-  chmod -R u=rwX,g=rX,o=--- "${basedir}/files/*/*"
+  chown -R www-data:www-data "${basedir}/files"
+  chmod -R u=rwX,g=rX,o=--- "${basedir}/files"
 fi
 
 ## Start
