@@ -2,6 +2,8 @@ FROM alpine:3.7
 
 ARG GLPI_VERSION
 ARG IMAGE_VERSION
+ARG BUILD_DATE
+ARG VCS_REF
 
 ENV GLPI_VERSION="${GLPI_VERSION}" \
     GLPI_PATHS_ROOT="/var/www" \
@@ -12,7 +14,16 @@ ENV GLPI_VERSION="${GLPI_VERSION}" \
 #   GLPI_INSTALL_PLUGINS="fusioninventory|https://github.com/fusioninventory/fusioninventory-for-glpi/releases/download/glpi9.2%2B1.0/glpi-fusioninventory-9.2.1.0.tar.bz2"
 
 LABEL maintainer="Pierre GINDRAUD <pgindraud@gmail.com>" \
-      application.glpi.version=$GLPI_VERSION \
+      org.label-schema.build-date="${BUILD_DATE}" \
+      org.label-schema.name="Web application GLPI in docker" \
+      org.label-schema.description="This image contains the GLPI web application" \
+      org.label-schema.url="https://github.com/Turgon37/docker-glpi" \
+      org.label-schema.vcs-ref="${VCS_REF}" \
+      org.label-schema.vcs-url="https://github.com/Turgon37/docker-glpi" \
+      org.label-schema.vendor="Pierre GINDRAUD" \
+      org.label-schema.version="${IMAGE_VERSION}" \
+      org.label-schema.schema-version="1.0" \
+      application.glpi.version="${GLPI_VERSION}" \
       image.version="${IMAGE_VERSION}"
 
 # Install dependencies
