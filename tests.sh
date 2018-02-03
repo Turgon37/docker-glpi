@@ -65,7 +65,7 @@ docker stop "${image_name}" && docker rm "${image_name}"
 
 
 #5 Test plugins installation with old variable
-echo '-> 5 Test plugins installation with tar.gz'
+echo '-> 5 Test plugins installation with old variable'
 image_name=glpi_5
 docker run $docker_run_options --name "${image_name}" --env='GLPI_PLUGINS=fusioninventory|https://github.com/fusioninventory/fusioninventory-for-glpi/releases/download/glpi9.1%2B1.1/fusioninventory-for-glpi_9.1.1.1.tar.gz' "${image}"
 wait_for_string_in_container_logs "${image_name}" 'Starting up...'
@@ -80,7 +80,7 @@ docker stop "${image_name}" && docker rm "${image_name}"
 echo '-> 6 Test web access'
 image_name=glpi_6
 docker run $docker_run_options --name "${image_name}" --publish 8000:80 "${image}"
-wait_for_string_in_container_logs "${image_name}" 'Starting up...'
+wait_for_string_in_container_logs "${image_name}" 'ready to handle connections'
 if ! curl -v http://localhost:8000 | grep --quiet 'install/install.php'; then
   docker logs "${image_name}"
   false
