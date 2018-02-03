@@ -26,6 +26,7 @@ script:
   #
   ## Run tests
   #
+  - ${PWD}/tests.sh
 
   #
   # Deploy
