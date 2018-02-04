@@ -2,6 +2,12 @@
 
 Items starting with `DEPRECATE` are important deprecation notices.
 
+## 2.1.0 (2018-02-04)
+
+### Image
+
++ Add healthcheck
+
 ## 2.0.0 (2018-02-03)
 
 ### Image
