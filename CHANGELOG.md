@@ -2,10 +2,17 @@
 
 Items starting with `DEPRECATE` are important deprecation notices.
 
+## 2.1.0 (2018-02-04)
+
+### Image
+
++ Add healthcheck
+
 ## 2.0.0 (2018-02-03)
 
 ### Image
 
++ Upgrade to Alpine 3.7
 + Add GLPI_CHMOD_PATHS_FILES [#2](https://github.com/Turgon37/docker-glpi/issues/2)
 + Add support for .bz2 plugin archives
 + Add standard labels in docker image
