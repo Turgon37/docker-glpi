@@ -82,4 +82,7 @@ EXPOSE 80/tcp
 VOLUME ["/var/www/files", "/var/www/config"]
 WORKDIR "${GLPI_PATHS_ROOT}"
 
+HEALTHCHECK --interval=5s --timeout=3s --retries=3 \
+    CMD curl --fail http://localhost:80 || exit 1
+
 CMD ["/start.sh"]
