@@ -31,6 +31,7 @@ LABEL maintainer="Pierre GINDRAUD <pgindraud@gmail.com>" \
 RUN apk --no-cache add \
       curl \
       nginx \
+      graphviz \
       php5 \
       php5-curl \
       php5-ctype \
