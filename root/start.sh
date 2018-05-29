@@ -106,7 +106,7 @@ if [ "x${GLPI_CHMOD_PATHS_FILES}" = 'xyes' ]; then
   chmod -R u=rwX,g=rX,o=--- "${basedir}/files"
 fi
 
-if [ "x${GLPI_ENABLE_CRONJOB}" = 'yes' ]; then
+if [ "x${GLPI_ENABLE_CRONJOB}" = 'xyes' ]; then
   /etc/supervisord.conf <<EOF
 [program:bash_cron]
 command=/bin/sh -c 'while true; do sleep 60; echo `date --rfc-2822` run cron; /usr/bin/php5 ${GLPI_PATHS_ROOT}/front/cron.php; done'
