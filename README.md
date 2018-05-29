@@ -23,7 +23,8 @@ This images contains an instance of GLPI web application served by nginx and php
 | GLPI_REMOVE_INSTALLER  | Boolean (yes/no) | Set to yes if it's not the first installation of glpi                    |
 | GLPI_CHMOD_PATHS_FILES | Boolean (yes/no) | Set to yes to apply chmod/chown on /var/www/files (useful for host mount)|
 | (deprecated) GLPI_PLUGINS          | String           | (will be removed on 3.0) Space separated list of plugins to install (see below)                                    |
-| GLPI_INSTALL_PLUGINS   | String           | Comma separated list of plugins to install (see below)                                    |
+| GLPI_INSTALL_PLUGINS   | String           | Comma separated list of plugins to install (see below)                                  |
+| GLPI_ENABLE_CRONJOB    | Boolean (yes/no) | Enable internal execution of the cron.php                                               |
 
 
 The GLPI_INSTALL_PLUGINS variable must contains the list of plugins to install (download) before start glpi.
@@ -41,6 +42,10 @@ For better example see at the end of this file.
 | ------------------ | ------------------------------------------------ |
 | /var/www/files     | The data path of GLPI                            |
 | /var/www/config    | The configuration path of GLPI                   |
+
+## Todo
+
+* Normalize log output
 
 ## Installation
 

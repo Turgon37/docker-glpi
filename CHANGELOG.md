@@ -2,6 +2,14 @@
 
 Items starting with `DEPRECATE` are important deprecation notices.
 
+## 2.3.0 (2018-05-29)
+
+### Image
+
++ Add php5-soap #13
++ Add graphviz #12
++ Fix cronjob #11
+
 ## 2.2.0 (2018-04-02)
 
 ### Image
