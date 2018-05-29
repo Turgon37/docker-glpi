@@ -44,6 +44,7 @@ RUN apk --no-cache add \
       php5-mysqli \
       php5-openssl \
       php5-opcache \
+      php5-soap \
       php5-xml \
       php5-xmlrpc \
       php5-zlib \
