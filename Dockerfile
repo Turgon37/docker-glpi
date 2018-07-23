@@ -6,10 +6,11 @@ ARG BUILD_DATE
 ARG VCS_REF
 
 ENV GLPI_VERSION="${GLPI_VERSION}" \
-    GLPI_PATHS_ROOT="/var/www" \
-    GLPI_PATHS_PLUGINS="/var/www/plugins" \
+    GLPI_PATHS_ROOT=/var/www \
+    GLPI_PATHS_PLUGINS=/var/www/plugins \
+    GLPI_ENABLE_CRONJOB=yes \
     GLPI_REMOVE_INSTALLER=no \
-    GLPI_CHMOD_FILES=no \
+    GLPI_CHMOD_PATHS_FILES=no \
     GLPI_INSTALL_PLUGINS=""
 #   GLPI_INSTALL_PLUGINS="fusioninventory|https://github.com/fusioninventory/fusioninventory-for-glpi/releases/download/glpi9.2%2B1.0/glpi-fusioninventory-9.2.1.0.tar.bz2"
 
@@ -30,6 +31,7 @@ LABEL maintainer="Pierre GINDRAUD <pgindraud@gmail.com>" \
 RUN apk --no-cache add \
       curl \
       nginx \
+      graphviz \
       php5 \
       php5-curl \
       php5-ctype \
@@ -43,6 +45,7 @@ RUN apk --no-cache add \
       php5-mysqli \
       php5-openssl \
       php5-opcache \
+      php5-soap \
       php5-xml \
       php5-xmlrpc \
       php5-zlib \

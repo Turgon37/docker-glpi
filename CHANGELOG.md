@@ -2,11 +2,29 @@
 
 Items starting with `DEPRECATE` are important deprecation notices.
 
+## 2.3.0 (2018-05-29)
+
+### Image
+
++ Add php5-soap #13
++ Add graphviz #12
++ Fix cronjob #11
+
+## 2.2.0 (2018-04-02)
+
+### Image
+
++ Add environment variable to control internal cronjob : GLPI_ENABLE_CRONJOB, default to enabled to keep backward compatiblity
+
+### Deprecation
+
+- Deprecate internal cronjobs handled by supervisor, it will be removed in 3.0 release.
+
 ## 2.1.0 (2018-02-04)
 
 ### Image
 
-+ Add healthcheck
++ Add docker healthcheck
 
 ## 2.0.0 (2018-02-03)
 
