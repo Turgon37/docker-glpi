@@ -11,7 +11,7 @@ env:
     - secure: Fvz2zm/CFp/hnEUy7C6GFt6CP6xIA/GrZDcgYftShNvq0xnSU6bVTQRlK4xA9CMaY6U79mMWqkl40cX5NcEhanw20Uz9vJ9ehrqE5P3rdEhq8mMyBbF3Oz6iHFhVRTo6xCDzB0GyP53cCBt4eRyhlyzwJ2fdWmUnt1c2G4O3nBh/Rd3CTI89BO7H8lLzhNNIgXyDam/xdvy5ujS+6vGycdDloF4mCHST2WS8dEHJvmR5P3uR+zfmbE4bW5bzlydH96us+B0ciTq5gL3MMjEXZPxQnoi6GpsVubdL2/gMIlNvF1M/qr8E3w9h6k9Ha+RG1YOC/Y13t+XqGVcDqjKuWxkYK2dEYFimlqSsr4KbtTrZbMso4kITm2S/Qz+Z3ZKxgdx6IKT0HFdylzdtaqjaomQcj3SEryeXP+b1riai/jADtqHj8dC4KzwJ787g74xqzR4GTjnbDwV2i2I6ihV+TwTx7klmBLS8jaBGOU8tr4J2wRLctJRZh/f6L94seKaHnjt/J9yunzwr11dd05LCQV6dBR6O13wqJdY/XR0TN/oN1TWaLx2lbRrkM+XO7u+tmlaJUwy4RlPIjz0TKbx8/8fKfv6QpHqHsV3HqgG/gCtkj3jMU7+IeL4OlkaIW4ralSsjELxBXzoIaOVwQyoiIBSVBEJpoVjc4pk1P0kxki0=
   matrix:
     # Provide a list of GLPI version to build
-    - GLPI_VERSION="9.3.0"
+    - GLPI_VERSION="9.3"
 
 script:
   - export VCS_REF=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo $TRAVIS_COMMIT; else echo $TRAVIS_PULL_REQUEST_SHA; fi)
