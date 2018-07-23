@@ -1,15 +1,15 @@
 FROM alpine:3.7
 
 ARG GLPI_VERSION
-ARG GLPI_VERSION_FILE
+#ARG GLPI_VERSION_FILE
 ARG IMAGE_VERSION
 ARG BUILD_DATE
 ARG VCS_REF
 
 ENV GLPI_VERSION="${GLPI_VERSION}" \
-    GLPI_VERSION_FILE="${GLPI_VERSION_FILE}" \    
-    GLPI_PATHS_ROOT/var/www \
-    GLPI_PATHS_PLUGINS=/var/www/plugins \
+    GLPI_VERSION_FILE="9.3" \
+    GLPI_PATHS_ROOT="/var/www" \
+    GLPI_PATHS_PLUGINS="/var/www/plugins" \
     GLPI_ENABLE_CRONJOB=yes \
     GLPI_REMOVE_INSTALLER=no \
     GLPI_CHMOD_PATHS_FILES=no \
@@ -20,9 +20,9 @@ LABEL maintainer="Pierre GINDRAUD <pgindraud@gmail.com>" \
       org.label-schema.build-date="${BUILD_DATE}" \
       org.label-schema.name="Web application GLPI in docker" \
       org.label-schema.description="This image contains the GLPI web application" \
-      org.label-schema.url="https://github.com/Turgon37/docker-glpi" \
+      org.label-schema.url="https://github.com/wolvverine/docker-glpi" \
       org.label-schema.vcs-ref="${VCS_REF}" \
-      org.label-schema.vcs-url="https://github.com/Turgon37/docker-glpi" \
+      org.label-schema.vcs-url="https://github.com/wolvverine/docker-glpi" \
       org.label-schema.vendor="Pierre GINDRAUD" \
       org.label-schema.version="${IMAGE_VERSION}" \
       org.label-schema.schema-version="1.0" \
