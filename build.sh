@@ -2,7 +2,7 @@
 
 ## Global settings
 # docker hub username
-DOCKER_USERNAME="${DOCKER_USERNAME:-Wolvverine}"
+DOCKER_USERNAME="${DOCKER_USERNAME:-wolvverine}"
 # image name
 DOCKER_IMAGE="${DOCKER_USERNAME}/${DOCKER_IMAGE:-docker-glpi}"
 # "production" branch
