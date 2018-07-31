@@ -4,7 +4,7 @@
 # docker hub username
 DOCKER_USERNAME="${DOCKER_USERNAME:-wolvverine}"
 # image name
-DOCKER_IMAGE="${DOCKER_USERNAME}/${DOCKER_IMAGE:-docker-glpi}"
+DOCKER_IMAGE="${DOCKER_USERNAME}/${DOCKER_IMAGE:-glpi}"
 # "production" branch
 MASTER_BRANCH=${MASTER_BRANCH:-master}
 
