@@ -2,9 +2,9 @@
 
 ## Global settings
 # docker hub username
-DOCKER_USERNAME="${DOCKER_USERNAME:-turgon37}"
+DOCKER_USERNAME="${DOCKER_USERNAME:-wolvverine}"
 # image name
-DOCKER_IMAGE="${DOCKER_USERNAME}/${DOCKER_IMAGE:-glpi}"
+DOCKER_IMAGE="${DOCKER_USERNAME}/${DOCKER_IMAGE:-docker-glpi}"
 # "production" branch
 MASTER_BRANCH=${MASTER_BRANCH:-master}
 
@@ -18,6 +18,7 @@ set -v
 
 # If empty version, fetch the latest from repository
 if [ -z "$GLPI_VERSION" ]; then
+#TODO - sort version
   GLPI_VERSION=`curl -s https://api.github.com/repos/glpi-project/glpi/releases | jq --raw-output '.[] | .tag_name' | sort --reverse | grep --max-count=1 --invert-match RC`
   if [ -z "$DOCKER_IMAGE_TAGS" ]; then
     DOCKER_IMAGE_TAGS="${DOCKER_IMAGE_TAGS} latest"
