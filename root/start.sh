@@ -35,7 +35,7 @@ function installPlugin() {
       tar xjf "${file}"
       ;;
     *)
-      echo "..#ERROR# unknown extension for ${file}. Please open an issue or make a PR to https://github.com/Turgon37/docker-glpi" 1>&2
+      echo "..#ERROR# unknown extension for ${file}. Please open an issue or make a PR to https://github.com/Wolvverine/docker-glpi" 1>&2
       false
       ;;
   esac
@@ -100,7 +100,7 @@ done
 
 ## Files permissions
 echo 'Set files permissions...'
-# address issue https://github.com/Turgon37/docker-glpi/issues/2
+# address issue https://github.com/Wolvverine/docker-glpi/issues/2
 if [ "x${GLPI_CHMOD_PATHS_FILES}" = 'xyes' ]; then
   chown -R www-data:www-data "${basedir}/files"
   chmod -R u=rwX,g=rX,o=--- "${basedir}/files"

@@ -1,7 +1,7 @@
 FROM alpine:3.7
 
 ARG GLPI_VERSION
-#ARG GLPI_VERSION_FILE
+ARG GLPI_VERSION_FILE
 ARG IMAGE_VERSION
 ARG BUILD_DATE
 ARG VCS_REF
@@ -16,14 +16,14 @@ ENV GLPI_VERSION="${GLPI_VERSION}" \
     GLPI_INSTALL_PLUGINS=""
 #   GLPI_INSTALL_PLUGINS="fusioninventory|https://github.com/fusioninventory/fusioninventory-for-glpi/releases/download/glpi9.3%2B1.1/fusioninventory-9.3.1.1.tar.bz2"
 
-LABEL maintainer="Pierre GINDRAUD <pgindraud@gmail.com>" \
+LABEL maintainer="<wolvverinepld@gmail.com>" \
       org.label-schema.build-date="${BUILD_DATE}" \
       org.label-schema.name="Web application GLPI in docker" \
       org.label-schema.description="This image contains the GLPI web application" \
       org.label-schema.url="https://github.com/wolvverine/docker-glpi" \
       org.label-schema.vcs-ref="${VCS_REF}" \
       org.label-schema.vcs-url="https://github.com/wolvverine/docker-glpi" \
-      org.label-schema.vendor="Pierre GINDRAUD" \
+      org.label-schema.vendor="" \
       org.label-schema.version="${IMAGE_VERSION}" \
       org.label-schema.schema-version="1.0" \
       application.glpi.version="${GLPI_VERSION}" \
@@ -31,6 +31,8 @@ LABEL maintainer="Pierre GINDRAUD <pgindraud@gmail.com>" \
 
 # Install dependencies
 RUN apk --no-cache add \
+      fping \
+      net-tools \
       curl \
       nginx \
       fping \
