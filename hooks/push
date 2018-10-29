@@ -1,5 +1,6 @@
-#!/usr/bin/env bash
-
+#!/usr/bin/bash
+set -e
+set -x
 
 ## Global settings
 # image name
@@ -7,7 +8,6 @@ DOCKER_IMAGE="${DOCKER_REPO:-glpi}"
 
 
 ## Initialization
-set -e
 
 if [[ ${DOCKER_REPO} =~ [^/]+/([^/]+)/([^/]+) ]]; then
   username=${BASH_REMATCH[1]}
