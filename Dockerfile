@@ -30,24 +30,37 @@ RUN apk --no-cache add \
       php5-json \
       php5-ldap \
       php5-pdo_mysql \
+      php5-phar \
       php5-mysqli \
       php5-openssl \
       php5-opcache \
       php5-soap \
       php5-xml \
+      php5-xmlreader \
       php5-xmlrpc \
       php5-zlib \
       supervisor \
       tar \
-    # Install GLPI sources
+    ## Install GLPI sources
     && mkdir -p /run/nginx \
     && mkdir -p "${GLPI_PATHS_ROOT}" \
     && adduser -h "${GLPI_PATHS_ROOT}" -g 'Web Application User' -S -D -H -G www-data www-data \
     && cd "${GLPI_PATHS_ROOT}" \
     && curl -s -O -L "https://github.com/glpi-project/glpi/releases/download/${GLPI_VERSION}/glpi-${GLPI_VERSION}.tgz" \
     && tar -xzf "glpi-${GLPI_VERSION}.tgz" --strip 1 \
+    ## Install composer to fetch missing libraries
+    && EXPECTED_SIGNATURE="$(curl -s -o - https://composer.github.io/installer.sig)" \
+    && php5 -r "copy('https://getcomposer.org/installer', '/tmp/composer-setup.php');" \
+    && CURRENT_SIGNATURE="$(php5 -r "echo hash_file('SHA384', '/tmp/composer-setup.php');")" \
+    && [ "$EXPECTED_SIGNATURE" == "$CURRENT_SIGNATURE" ] || (echo 'ERROR: Invalid installer signature' >&2; rm composer-setup.php; exit 1) \
+    && php5 /tmp/composer-setup.php --install-dir=/tmp/ && rm /tmp/composer-setup.php \
+    && php5 /tmp/composer.phar require --no-interaction apereo/phpcas \
+    ## Cleanup
     && rm "glpi-${GLPI_VERSION}.tgz" \
-    && rm -rf AUTHORS.txt CHANGELOG.txt LISEZMOI.txt README.md
+    && rm -rf AUTHORS.txt CHANGELOG.txt LISEZMOI.txt README.md composer.json composer.lock \
+    && rm /tmp/* \
+    && apk del --no-cache \
+      php5-phar
 
 # Add some configurations files
 COPY root/ /

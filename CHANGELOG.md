@@ -2,6 +2,16 @@
 
 Items starting with `DEPRECATE` are important deprecation notices.
 
+## 2.4.0 (2018-11-03)
+
+### Image
+
++ Add ping and fping for https://github.com/pluginsGLPI/addressing plugin #18
++ Add apereo/phpCAS library to fix GLPI requirements #19 (https://github.com/apereo/phpCAS)
++ Upgrade GLPI to 9.3 #15
+
+See this issue to upgrade from 9.2* to 9.3* : https://github.com/glpi-project/glpi/issues/4311
+
 ## 2.3.0 (2018-05-29)
 
 ### Image
