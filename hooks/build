@@ -23,7 +23,7 @@ if [ -z "$GLPI_VERSION" ]; then
   image_tags="${image_tags} latest"
   test -n "$GLPI_VERSION"
 fi
-echo "-> selected GLPI version ${GLPI_VERSION}"
+echo "-> selected GLPI version '${GLPI_VERSION}'"
 
 # If empty commit, fetch the current from local git rpo
 if [ -n "${SOURCE_COMMIT}" ]; then
@@ -58,7 +58,7 @@ image_version=`cat VERSION`
 echo "-> use image version '${image_version}'"
 
 # customs tags
-image_tags="${image_tags} ${image_version}"
+image_tags="${image_tags} ${GLPI_VERSION}"
 echo "-> use image tags '${image_tags}'"
 
 # finals
