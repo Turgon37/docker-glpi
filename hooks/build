@@ -20,7 +20,7 @@ set -e
 if [ -z "$GLPI_VERSION" ]; then
   GLPI_VERSION=`curl https://api.github.com/repos/glpi-project/glpi/releases/latest | grep --perl-regexp --only-matching '(?<=tag_name": ")[a-z0-9.-]+'`
   # no glpi fixed version => latest build
-  image_tags="${image_tags} latest"
+  image_tags="${image_tags} latest ${GLPI_VERSION}-latest"
   test -n "$GLPI_VERSION"
 fi
 echo "-> selected GLPI version '${GLPI_VERSION}'"
@@ -58,7 +58,7 @@ image_version=`cat VERSION`
 echo "-> use image version '${image_version}'"
 
 # customs tags
-image_tags="${image_tags} ${GLPI_VERSION}"
+image_tags="${image_tags} ${GLPI_VERSION}-${image_version}"
 echo "-> use image tags '${image_tags}'"
 
 # finals
