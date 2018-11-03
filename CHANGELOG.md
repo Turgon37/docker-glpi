@@ -12,6 +12,10 @@ Items starting with `DEPRECATE` are important deprecation notices.
 
 See this issue to upgrade from 9.2* to 9.3* : https://github.com/glpi-project/glpi/issues/4311
 
+### Deprecation
+
+- DEPRECATE environment variable GLPI_PLUGINS in favor of GLPI_INSTALL_PLUGINS (will be removed in 3.0)
+
 ## 2.3.0 (2018-05-29)
 
 ### Image
@@ -28,7 +32,7 @@ See this issue to upgrade from 9.2* to 9.3* : https://github.com/glpi-project/gl
 
 ### Deprecation
 
-- Deprecate internal cronjobs handled by supervisor, it will be removed in 3.0 release.
+- DEPRECATE internal cronjobs handled by supervisor, it will be removed in 3.0 release.
 
 ## 2.1.0 (2018-02-04)
 
