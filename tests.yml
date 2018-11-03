@@ -1,0 +1,5 @@
+schemaVersion: 2.0.0
+
+metadataTest:
+  exposedPorts: ["80"]
+  volumes: ["/var/www/files", "/var/www/config"]
