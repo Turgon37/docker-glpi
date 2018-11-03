@@ -9,7 +9,6 @@ ENV GLPI_ENABLE_CRONJOB=yes
 ENV GLPI_REMOVE_INSTALLER=no
 ENV GLPI_CHMOD_PATHS_FILES=no
 ENV GLPI_INSTALL_PLUGINS=''
-#   GLPI_INSTALL_PLUGINS="fusioninventory|https://github.com/fusioninventory/fusioninventory-for-glpi/releases/download/glpi9.2%2B1.0/glpi-fusioninventory-9.2.1.0.tar.bz2"
 
 # Install dependencies
 RUN apk --no-cache add \
@@ -54,11 +53,11 @@ RUN apk --no-cache add \
     && CURRENT_SIGNATURE="$(php5 -r "echo hash_file('SHA384', '/tmp/composer-setup.php');")" \
     && [ "$EXPECTED_SIGNATURE" == "$CURRENT_SIGNATURE" ] || (echo 'ERROR: Invalid installer signature' >&2; rm composer-setup.php; exit 1) \
     && php5 /tmp/composer-setup.php --install-dir=/tmp/ && rm /tmp/composer-setup.php \
-    && php5 /tmp/composer.phar require --no-interaction apereo/phpcas \
+    && COMPOSER_CACHE_DIR=/tmp/composer php5 /tmp/composer.phar require --no-interaction apereo/phpcas \
     ## Cleanup
     && rm "glpi-${GLPI_VERSION}.tgz" \
     && rm -rf AUTHORS.txt CHANGELOG.txt LISEZMOI.txt README.md composer.json composer.lock \
-    && rm /tmp/* \
+    && rm -rf /tmp/* \
     && apk del --no-cache \
       php5-phar
 

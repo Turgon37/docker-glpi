@@ -2,6 +2,12 @@
 
 Items starting with `DEPRECATE` are important deprecation notices.
 
+## 2.4.1 (2018-11-03)
+
+### Image
+
+- Clean composer local cache to free 20M of space
+
 ## 2.4.0 (2018-11-03)
 
 ### Image
