@@ -39,6 +39,7 @@ echo '-> 2 Test plugins installation with tar.bz2'
 image_name=glpi_2
 docker run $docker_run_options --name "${image_name}" --env='GLPI_INSTALL_PLUGINS=fusioninventory|https://github.com/fusioninventory/fusioninventory-for-glpi/releases/download/glpi9.3%2B1.1/fusioninventory-9.3.1.1.tar.bz2' "${image_building_name}"
 wait_for_string_in_container_logs "${image_name}" 'Starting up...'
+# test
 if ! docker exec "${image_name}" test -d plugins/fusioninventory; then
   docker logs "${image_name}"
   false
@@ -51,7 +52,7 @@ echo '-> 3 Test plugins installation with tar.gz'
 image_name=glpi_3
 docker run $docker_run_options --name "${image_name}" --env='GLPI_INSTALL_PLUGINS=fusioninventory|https://github.com/fusioninventory/fusioninventory-for-glpi/releases/download/glpi9.3%2B1.2/fusioninventory-9.3+1.2.tar.gz' "${image_building_name}"
 wait_for_string_in_container_logs "${image_name}" 'Starting up...'
-#test
+# test
 if ! docker exec "${image_name}" test -d plugins/fusioninventory; then
   docker logs "${image_name}"
   false
@@ -64,7 +65,7 @@ echo '-> 4 Test plugins installation with old variable'
 image_name=glpi_4
 docker run $docker_run_options --name "${image_name}" --env='GLPI_PLUGINS=fusioninventory|https://github.com/fusioninventory/fusioninventory-for-glpi/releases/download/glpi9  .3%2B1.2/fusioninventory-9.3+1.2.tar.gz' "${image_building_name}"
 wait_for_string_in_container_logs "${image_name}" 'Starting up...'
-#test
+# test
 if ! docker exec "${image_name}" test -d plugins/fusioninventory; then
   docker logs "${image_name}"
   false
@@ -78,6 +79,7 @@ image_name=glpi_5
 docker run $docker_run_options --name "${image_name}" --publish 8000:80 "${image_building_name}"
 wait_for_string_in_container_logs "${image_name}" 'nginx entered RUNNING state'
 sleep 5
+# test
 if ! curl -v http://localhost:8000 2>&1 | grep --quiet 'install/install.php'; then
   docker logs "${image_name}"
   false

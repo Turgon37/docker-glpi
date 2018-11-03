@@ -42,7 +42,7 @@ RUN apk --no-cache add \
     && mkdir -p "${GLPI_PATHS_ROOT}" \
     && adduser -h "${GLPI_PATHS_ROOT}" -g 'Web Application User' -S -D -H -G www-data www-data \
     && cd "${GLPI_PATHS_ROOT}" \
-    && curl -O -L "https://github.com/glpi-project/glpi/releases/download/${GLPI_VERSION}/glpi-${GLPI_VERSION}.tgz" \
+    && curl -s -O -L "https://github.com/glpi-project/glpi/releases/download/${GLPI_VERSION}/glpi-${GLPI_VERSION}.tgz" \
     && tar -xzf "glpi-${GLPI_VERSION}.tgz" --strip 1 \
     && rm "glpi-${GLPI_VERSION}.tgz" \
     && rm -rf AUTHORS.txt CHANGELOG.txt LISEZMOI.txt README.md
