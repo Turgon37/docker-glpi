@@ -17,8 +17,10 @@ RUN apk --no-cache add \
       nginx \
       graphviz \
       php5 \
-      php5-curl \
+      php5-apcu \
+      php5-cli \
       php5-ctype \
+      php5-curl \
       php5-dom \
       php5-fpm \
       php5-gd \
@@ -35,8 +37,6 @@ RUN apk --no-cache add \
       php5-zlib \
       supervisor \
       tar \
-    && apk --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/v3.5/main/ add \
-      php5-apcu \
     # Install GLPI sources
     && mkdir -p /run/nginx \
     && mkdir -p "${GLPI_PATHS_ROOT}" \
