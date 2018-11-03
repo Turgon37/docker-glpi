@@ -53,11 +53,11 @@ RUN apk --no-cache add \
     && CURRENT_SIGNATURE="$(php5 -r "echo hash_file('SHA384', '/tmp/composer-setup.php');")" \
     && [ "$EXPECTED_SIGNATURE" == "$CURRENT_SIGNATURE" ] || (echo 'ERROR: Invalid installer signature' >&2; rm composer-setup.php; exit 1) \
     && php5 /tmp/composer-setup.php --install-dir=/tmp/ && rm /tmp/composer-setup.php \
-    && COMPOSER_CACHE_DIR=/tmp/composer php5 /tmp/composer.phar require --no-interaction apereo/phpcas \
+    && COMPOSER_HOME=/tmp/composer php5 /tmp/composer.phar require --no-interaction apereo/phpcas \
     ## Cleanup
     && rm "glpi-${GLPI_VERSION}.tgz" \
-    && rm -rf AUTHORS.txt CHANGELOG.txt LISEZMOI.txt README.md composer.json composer.lock \
-    && rm -rf /tmp/* \
+    && rm -rf AUTHORS.txt CHANGELOG.md COPYING.txt LISEZMOI.txt README.md composer.json composer.lock \
+    && find /root /tmp -mindepth 1 -maxdepth 1 -not -name '.' -and -not -name '..' | xargs rm -rf \
     && apk del --no-cache \
       php5-phar
 
