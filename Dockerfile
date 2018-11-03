@@ -15,7 +15,9 @@ ENV GLPI_INSTALL_PLUGINS=''
 RUN apk --no-cache add \
       curl \
       nginx \
+      fping \
       graphviz \
+      iputils \
       php5 \
       php5-apcu \
       php5-cli \
