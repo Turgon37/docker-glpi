@@ -6,34 +6,19 @@ services:
   - docker
 
 env:
-  global:
-    - secure: mpNx8sMNQuNccsku4ARRQTH0fkC+b3cK84X0cJCdBz+nGRyCbC6T8V+dKWVsPX54vM9bFAUYjmjhVEyhSWWBb8M18t4izAtJjOm1KACddVYKK63MO1ZIbmOObDsE4Tg5cM6cM94Bl8JvWI5jM6rdenoGs4prdUGpbAd5sq/sN69FLL5H3Wr1QOfDvVFm/UDJrzAVJePSuoPIUKT68rKQDs8aH0HjRcDLlowLyVBojUGuo8De6uXKHU+Ec1yA6rq5ynU0Q0ar2uPzwkxwIPibWgO1E84cj+c9mtDtzuoT5Gu8l6DbLrXLPBEQffFrnXeIwAoJHF8jrPznnonk49QsoLuTQ25IH6pPwOCchyjz/wzHqgATEInm6FmWlVdNbqeU424/vIJvVYTflDowOjxn8kp2t1qymxA6AldFfoK8RcdeKVvSMvaDrAay/Rd2wFNIc0JMhzvIGEjj311K0kT/WHQh6zOB2kPinIMT32Zg72nmKp65fJ6YMZlL7zQDWMgfxlm9ngLCew+qWLAtLNtZPule6vJPFhxX138Dq43avft7dlTC0jVfW2S7rCrjwuytvecJk0+mN4RpfHMSHudizMcP1KkyW8GwHrPy72Pu2VSPmeqjpc6yvJnBIueWsrKePr+RH1/Soq2sFc9KzYZZYW4+oqBMnyzNqdO9CIug664=
-    - secure: Fvz2zm/CFp/hnEUy7C6GFt6CP6xIA/GrZDcgYftShNvq0xnSU6bVTQRlK4xA9CMaY6U79mMWqkl40cX5NcEhanw20Uz9vJ9ehrqE5P3rdEhq8mMyBbF3Oz6iHFhVRTo6xCDzB0GyP53cCBt4eRyhlyzwJ2fdWmUnt1c2G4O3nBh/Rd3CTI89BO7H8lLzhNNIgXyDam/xdvy5ujS+6vGycdDloF4mCHST2WS8dEHJvmR5P3uR+zfmbE4bW5bzlydH96us+B0ciTq5gL3MMjEXZPxQnoi6GpsVubdL2/gMIlNvF1M/qr8E3w9h6k9Ha+RG1YOC/Y13t+XqGVcDqjKuWxkYK2dEYFimlqSsr4KbtTrZbMso4kITm2S/Qz+Z3ZKxgdx6IKT0HFdylzdtaqjaomQcj3SEryeXP+b1riai/jADtqHj8dC4KzwJ787g74xqzR4GTjnbDwV2i2I6ihV+TwTx7klmBLS8jaBGOU8tr4J2wRLctJRZh/f6L94seKaHnjt/J9yunzwr11dd05LCQV6dBR6O13wqJdY/XR0TN/oN1TWaLx2lbRrkM+XO7u+tmlaJUwy4RlPIjz0TKbx8/8fKfv6QpHqHsV3HqgG/gCtkj3jMU7+IeL4OlkaIW4ralSsjELxBXzoIaOVwQyoiIBSVBEJpoVjc4pk1P0kxki0=
   matrix:
     # Provide a list of GLPI version to build
-    - GLPI_VERSION=""
+    - GLPI_VERSION=''
     - GLPI_VERSION=9.1.3
+    - GLPI_VERSION=9.3.2
 
 script:
-  - export VCS_REF=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo $TRAVIS_COMMIT; else echo $TRAVIS_PULL_REQUEST_SHA; fi)
-  - export VCS_BRANCH=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo $TRAVIS_BRANCH; else echo $TRAVIS_PULL_REQUEST_BRANCH; fi)
-
-  # Download tools shim.
-  - wget -O ${PWD}/_tools.sh https://gist.github.com/Turgon37/2ba8685893807e3637ea3879ef9d2062/raw
-
-  # 
-  # Build docker image
   #
-  - ${PWD}/build.sh
+  ## Build
+  #
+  - ./hooks/build
 
   #
   ## Run tests
   #
-  - ${PWD}/tests.sh && touch _test_ok
-
-  #
-  # Deploy
-  #
-  - '[ "$TRAVIS_PULL_REQUEST" == "false" ] || exit 0'
-  - '[ "$TRAVIS_SECURE_ENV_VARS" == "true" -a  -n "$DOCKERHUB_REGISTRY_USERNAME" -a -n "$DOCKERHUB_REGISTRY_PASSWORD" ]'
-  - '[ -f _test_ok ] && ${PWD}/deploy.sh'
+  - ./tests.sh

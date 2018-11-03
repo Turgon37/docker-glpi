@@ -1,0 +1,13 @@
+schemaVersion: 2.0.0
+
+metadataTest:
+  exposedPorts: ["80"]
+  volumes: ["/var/www/files", "/var/www/config"]
+
+commandTests:
+  - name: GLPI successfully installed
+    command: test
+    args:
+      - '-f'
+      - index.php
+    exitCode: 0
