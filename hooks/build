@@ -18,7 +18,7 @@ set -e
 
 # If empty version, fetch the latest from repository
 if [ -z "$GLPI_VERSION" ]; then
-  GLPI_VERSION=`curl -s https://api.github.com/repos/glpi-project/glpi/releases | jq --raw-output '.[] | .tag_name' | sort --reverse | grep --max-count=1 --invert-match RC`
+  GLPI_VERSION=`curl https://api.github.com/repos/glpi-project/glpi/releases/latest | grep --perl-regexp --only-matching '(?<=tag_name": ")[a-z0-9.-]+'`
   # no glpi fixed version => latest build
   image_tags="${image_tags} latest"
   test -n "$GLPI_VERSION"
