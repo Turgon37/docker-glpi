@@ -1,8 +1,10 @@
 #!/bin/sh
+set -e
+set -x
 
 
 ## Initialization
-set -e
+
 
 image_building_name=`cat ${PWD}/_image_build`
 docker_run_options='--detach'
