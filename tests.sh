@@ -26,7 +26,8 @@ fi
 
 # Download tools shim.
 if [[ ! -f _tools.sh ]]; then
-  curl -L -o ${PWD}/_tools.sh https://gist.github.com/Wolvverine/cd03f29d68600c8850aeed8fe2b3d464/raw
+  curl -L -o ${PWD}/_tools.sh https://gist.github.com/Wolvverine/cd03f29d68600c8850aeed8fe2b3d464/raw \
+  && chmod +x ${PWD}/_tools.sh
 fi
 source ${PWD}/_tools.sh
 
