@@ -1,14 +1,10 @@
-#!/bin/sh
+#!/usr/bin/env bash
 set -e
 set -x
 
-
 ## Initialization
-
-
 image_building_name=`cat ${PWD}/_image_build`
 docker_run_options='--detach'
-
 
 ## Prepare
 if [[ -z $(which container-structure-test 2>/dev/null) ]]; then
@@ -31,11 +27,9 @@ if [[ ! -f _tools.sh ]]; then
 fi
 source ${PWD}/_tools.sh
 
-
 ## Test
 container-structure-test \
     test --image "${image_building_name}" --config ./tests.yml
-
 
 #2 Test plugins installation with tar.bz2
 echo '-> 2 Test plugins installation with tar.bz2'
