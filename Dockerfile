@@ -40,7 +40,6 @@ RUN apk --no-cache add \
       php5-zlib \
       supervisor \
       tar \
-    ## Install GLPI sources
     && mkdir -p /run/nginx \
     && mkdir -p "${GLPI_PATHS_ROOT}" \
     && adduser -h "${GLPI_PATHS_ROOT}" -g 'Web Application User' -S -D -H -G www-data www-data \
