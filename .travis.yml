@@ -24,3 +24,7 @@ script:
   ## Run tests
   #
   - ./tests.sh
+  #
+  ## Deploy
+  #
+  - ./hooks/push
