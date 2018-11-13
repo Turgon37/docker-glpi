@@ -9,18 +9,26 @@ DOCKER_IMAGE="${DOCKER_REPO:-glpi}"
 
 ## Initialization
 
-if [[ ${DOCKER_REPO} =~ [^/]+/([^/]+)/([^/]+) ]]; then
-  username=${BASH_REMATCH[1]}
-  repo=${BASH_REMATCH[2]}
-else
-  echo 'ERROR: unable to extract username and repo from environment' 1>&2
-  exit 1
-fi
+# if [[ ${DOCKER_REPO} =~ [^/]+/([^/]+)/([^/]+) ]]; then
+  # username=${BASH_REMATCH[1]}
+  # repo=${BASH_REMATCH[2]}
+# else
+  # echo 'ERROR: unable to extract username and repo from environment' 1>&2
+  # exit 1
+# fi
 
 image_version=`cat VERSION`
 image_tags=`cat ${PWD}/_tags`
 image_building_name=`cat ${PWD}/_image_build`
 
+## Login to repository
+
+## Init conditions
+[ -n "${GLPI_VERSION}" -a "${VCS_BRANCH}" != "${PRODUCTION_BRANCH}" ] && exit 0
+ ## Deploy
+# Authenticate to docker hub
+[ "$TRAVIS_SECURE_ENV_VARS" == "true" -a  -n "$DOCKERHUB_REGISTRY_USERNAME" -a -n "$DOCKERHUB_REGISTRY_PASSWORD" ] &&
+echo "$DOCKERHUB_REGISTRY_PASSWORD" | docker login --username="$DOCKERHUB_REGISTRY_USERNAME" --password-stdin
 
 ## Enforce versioning
 for tag in $image_tags; do
