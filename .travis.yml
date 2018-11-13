@@ -11,7 +11,6 @@ env:
     - DOCKERHUB_REGISTRY_USERNAME="wolvverine"
   matrix:
     # Provide a list of GLPI version to build
-    - GLPI_VERSION=''
     - GLPI_VERSION=9.3.2
 
 script:
