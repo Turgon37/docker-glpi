@@ -7,7 +7,7 @@ services:
 
 env:
   global:
-    - secure: "E/Ylr8QBhrtB1sWncNMvs/deVyBY3U80COSWp2RS9gmSw7gjI8TEyFudQoPCGyq2VO1Xv37VDfG5j6Fw2jx6VKroFrmxDc8Dqcyur2AWKYTSdIsrRkBU4AAvIC3fM6oq76RdTEmkhs+iDz1rBJuyPaO2HfvtC1RsUGcUSVCrdxBzhiLK0jdZcastADikrA9gfNP3VUTAKJTFgnCUJ0xQ94Kvd/knkOp9rypiPXVDfqV4Qj6m43Ps1vsLEhmN35NrBGktB7DvFGqamhSF1v2IIuGocHLH5fqHvFihgf5tCjT43IWDBsuIvVViFln+U8PLPECMu5vj08qQnhiByOa7TIIC4wEu1uXDq6+NtVoT4XxgMgb37/ATsYQX+CMDIeD42BrpjR4P/v6IIrtXjLmaqlR1YSSE7Xd9hL3wAecKZbPppZnpRRFzF1oYXOMifAE/GHOUvNvkFGy8ZO0ZsSHQiYEGKyYxyl9jYGG0Hz78cGHI5yz5HYyjz3NvFwDr8Xs08RXSIfFag+IZGLaLza7DXLBtvSMWvGrYgv8X5eIue/UBkCJBlrrXlXTcSc/rEO98fRwX/wHz+TBl6G8XP1/smZbm8DtE3GlZda6TIGGcnLgmNM5Mh2lH5cqf7HtXWQBvzvJjK/BUwG92A4Byi68DVvDWZIQO2fwfVF4rq/LGbVQ="
+    - secure: s6N14mGTrrfGTh3e0xD4YvnDWul/5r/zShoJjuzfs1ddyz8XuEDurVM4snqhV3mOYpL/e+oKXyY0SPRZt34brY0xrNLwtf3VcbgOg0aPY8olLzYK60+q+AGqCaICH6XUrPU3u07df+zEFNKKWwIA5M1hnFHU25uFjGuJ0FwcdJgN42hXUob8nSkhn2qP+Qy1G62pDUol3Ir01oPLUAd5W/FWgqnessscFc6jozfImMknxhCNp6unPGxlyKmo5vNsD/dmVVy1imUjwThd8CWHIyuy5SJlA3m/PVRvudgQj+3962RZhHJrpYrrsuXKDFbvowGx/i6hYYUBLgQWCsF6CApXLzQEULO4wynz+l5N3pBLADBdGR6AeOnAs4q3BTnz3F+CllYdp1ok0jDNn+c9KwFOBQyDPJjVb1GgbjxksDCSONeJHuwgpLBn6o497Qc2DOy/cFq82nQdxAAIf4TBYX2O1Ofu6mdIlY1TrTcSYLe+2qerTkdGIeuE/laefHSkQqgHBsafqsvXuZCzBY35l6pfhJzIzn6hGm3l0ygL85nQMeJgXgpo3/re/9ha9SfeeCzJj2q+vGt7T0Db/oy6TtTndfaiKELNU2lrpQzTS1XSFXxHfg30mpm9coJk9nNRTSUJ+mD9jC5t68IfjfY81PxEiaUKIXz96Uek4ipSx/c=
     - DOCKERHUB_REGISTRY_USERNAME="wolvverine"
   matrix:
     # Provide a list of GLPI version to build
@@ -23,8 +23,4 @@ script:
   #
   ## Run tests
   #
-  - ./tests.sh
-  #
-  ## Deploy
-  #
-  - ./hooks/push
+  - ./tests.sh && ./hooks/push
