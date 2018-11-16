@@ -26,9 +26,6 @@ image_building_name=`cat ${PWD}/_image_build`
 ## Init conditions
 [ -n "${GLPI_VERSION}" -a "${VCS_BRANCH}" != "${PRODUCTION_BRANCH}" ] && exit 0
  ## Deploy
-# Authenticate to docker hub
-[ "$TRAVIS_SECURE_ENV_VARS" == "true" -a  -n "${username}" -a -n "$DOCKERHUB_REGISTRY_PASSWORD" ] &&
-echo "$DOCKERHUB_REGISTRY_PASSWORD" | docker login --username="${username}" --password-stdin
 
 ## Enforce versioning
 for tag in $image_tags; do

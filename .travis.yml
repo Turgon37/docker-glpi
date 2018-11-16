@@ -1,12 +1,23 @@
+---
 language: bash
+
+# Tell Travis to start Docker when it brings up an environment.
 services:
-- docker
+  - docker
+
 env:
   global:
-  - DOCKERHUB_REGISTRY_USERNAME="wolvverine"
-  - secure: fCjyWo5ESy7exJocEea0rUF92T2m9haOCjEAi9b2lRgNqNlZBM6qOzPOWDZ1obEoLpXv+/2z2uV6d6PJAb51w+NXWa4bjPbQNRVtLSp1WVf2ooLrJyXxrEARJpSB08NnK5bJselNnxWQJxBB/9ikxkvMX3YWQBbOggL87grRwzMESG6SW0c/UQCXavah38w1pELK937K7E1BlfYgPngoUPckfyD5O76+EPM6RYsNQ3Ac9FN5mylb24XreQxSpWIvhWdYEoAacZ431etA3bsUZef4RWXQ76+AvSpoVy8ojxaOxQ+0MicifYhmvp3PkTafodN1blPlHNO6r5EfaxNoE8yHFSE3rvaQVyfKWJ/siXPim1KMu1vq0sRomtKyA7/JZt0fW5A82E1GsnwMHSP2KGwJGuoJdvFQxeCNyD2EbTBfvlug9NprqqjK6r171MflY6VCDIbrKZVwrj65ZAWcnf3b1WTI9KFi8mRT1kjP+LcKMwIWcQ1tEL/87kGIwBdgFUWJVQuAWpPF0aMTv3nnZd8wTIN0DTljtisjJtxVVlQNJj6gEnHeX8iXa0nDPf8rdKgHFelhAXU0MAwRXsdRNcbZDs5NjCMTbn5jRhgRek11nuSQLY3v0kt99ne46UchuOn0I28dFT7/hWBxkUTdCdd/dr/ETzKFm+xZo1Y6Jnk=
   matrix:
-  - GLPI_VERSION=9.3.2
+    # Provide a list of GLPI version to build
+    - GLPI_VERSION=9.3.2
+
 script:
-- "./hooks/build"
-- "./tests.sh && ./hooks/push"
+  #
+  ## Build
+  #
+  - ./hooks/build
+
+  #
+  ## Run tests
+  #
+  - ./tests.sh
