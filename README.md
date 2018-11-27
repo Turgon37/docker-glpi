@@ -66,7 +66,7 @@ git clone
 * or Automatic
 
 ```
-docker pull wolvverine/glpi:latest
+docker pull wolvverine/docker-glpi:latest
 ```
 
 
@@ -77,7 +77,7 @@ The first time you run this image, set the GLPI_REMOVE_INSTALLER variable to 'no
 ### Without database link (you can use an ip address or a domain name in the installer gui)
 
 ```
-docker run --name glpi --publish 8000:80 --volume data-glpi:/var/www/files --volume data-glpi-config:/var/www/config wolvverine/glpi
+docker run --name glpi --publish 8000:80 --volume data-glpi:/var/www/files --volume data-glpi-config:/var/www/config wolvverine/docker-glpi
 ```
 
 ### With database link (if you have any MySQL/MariaDB as a docker container)
@@ -107,7 +107,7 @@ docker run --name glpi --publish 8000:80 --volume data-glpi:/var/www/files --vol
 ```
 services:
   glpi:
-    image: wolvverine/glpi
+    image: wolvverine/docker-glpi
     environment:
       GLPI_REMOVE_INSTALLER: 'yes'
       GLPI_INSTALL_PLUGINS: 'fusioninventory|https://github.com/fusioninventory/fusioninventory-for-glpi/releases/download/glpi9.3%2B1.2/fusioninventory-9.3+1.2.tar.gz'
