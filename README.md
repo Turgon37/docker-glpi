@@ -1,6 +1,6 @@
 # Docker GLPI
 
-[![Build Status](https://travis-ci.org/Wolvverine/docker-glpi.svg?branch=master)](https://travis-ci.org/Wolvverine/docker-glpi)
+[![Build Status](https://travis-ci.com/Wolvverine/docker-glpi.svg?branch=master)](https://travis-ci.com/Wolvverine/docker-glpi)
 [![](https://images.microbadger.com/badges/image/Wolvverine/glpi.svg)](https://microbadger.com/images/Wolvverine/glpi "Get your own image badge on microbadger.com")
 [![](https://images.microbadger.com/badges/version/Wolvverine/glpi.svg)](https://microbadger.com/images/Wolvverine/glpi "Get your own version badge on microbadger.com")
 
@@ -10,9 +10,7 @@ This images contains an instance of GLPI web application served by nginx and php
 
 ## Supported tags and respective Dockerfile links
 
-* [`9.3.2`,`latest`](https://github.com/Turgon37/docker-glpi/blob/master/Dockerfile)
-
-* [`9.3.1`](https://github.com/Turgon37/docker-glpi/blob/master/Dockerfile)
+* [`9.3.2-2.4.1`,`9.3.2-latest`,`latest`](https://github.com/Wolvverine/docker-glpi/blob/master/Dockerfile)
 
 
 ## Docker Informations
@@ -62,13 +60,13 @@ For better example see at the end of this file.
 
 ```
 git clone
-docker build -t wolvverine/glpi .
+./hooks/build
 ```
 
 * or Automatic
 
 ```
-docker pull wolvverine/glpi
+docker pull wolvverine/docker-glpi:latest
 ```
 
 
@@ -79,7 +77,7 @@ The first time you run this image, set the GLPI_REMOVE_INSTALLER variable to 'no
 ### Without database link (you can use an ip address or a domain name in the installer gui)
 
 ```
-docker run --name glpi --publish 8000:80 --volume data-glpi:/var/www/files --volume data-glpi-config:/var/www/config wolvverine/glpi
+docker run --name glpi --publish 8000:80 --volume data-glpi:/var/www/files --volume data-glpi-config:/var/www/config wolvverine/docker-glpi
 ```
 
 ### With database link (if you have any MySQL/MariaDB as a docker container)
@@ -87,7 +85,7 @@ docker run --name glpi --publish 8000:80 --volume data-glpi:/var/www/files --vol
 #### Create dedicated network
 
 ```
-docker run --name glpi --publish 8000:80 --volume data-glpi:/var/www/files --volume data-glpi-config:/var/www/config --link yourdatabase:mysql wolvverine/glpi
+docker network create glpi-network
 ```
 
 #### Start a MySQL instance
@@ -109,10 +107,10 @@ docker run --name glpi --publish 8000:80 --volume data-glpi:/var/www/files --vol
 ```
 services:
   glpi:
-    image: wolvverine/glpi
+    image: wolvverine/docker-glpi
     environment:
       GLPI_REMOVE_INSTALLER: 'yes'
-      GLPI_INSTALL_PLUGINS: 'fusioninventory|https://github.com/fusioninventory/fusioninventory-for-glpi/releases/download/glpi9.2%2B1.0/glpi-fusioninventory-9.2.1.0.tar.bz2'
+      GLPI_INSTALL_PLUGINS: 'fusioninventory|https://github.com/fusioninventory/fusioninventory-for-glpi/releases/download/glpi9.3%2B1.2/fusioninventory-9.3+1.2.tar.gz'
     ports:
       - 80
     volumes:
