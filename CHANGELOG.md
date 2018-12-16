@@ -2,6 +2,12 @@
 
 Items starting with `DEPRECATE` are important deprecation notices.
 
+## 2.4.2 (2018-12-16)
+
+### Image
+
+- Handle Timezone configuration #21
+
 ## 2.4.1 (2018-11-03)
 
 ### Image

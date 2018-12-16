@@ -40,6 +40,7 @@ RUN apk --no-cache add \
       php5-zlib \
       supervisor \
       tar \
+      tzdata \
     ## Install GLPI sources
     && mkdir -p /run/nginx \
     && mkdir -p "${GLPI_PATHS_ROOT}" \
