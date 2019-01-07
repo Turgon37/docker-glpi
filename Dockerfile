@@ -38,6 +38,7 @@ RUN apk --no-cache add \
       php5-xmlreader \
       php5-xmlrpc \
       php5-zlib \
+	  php5-snmp \
       supervisor \
       tar \
     && mkdir -p /run/nginx \
