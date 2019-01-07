@@ -9,7 +9,6 @@ env:
   global:
   matrix:
     # Provide a list of GLPI version to build
-    - GLPI_VERSION=''
     - GLPI_VERSION=9.3.3
 
 script:
