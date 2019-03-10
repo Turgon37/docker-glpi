@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+## Global settings
+# image name
+DOCKER_IMAGE="${DOCKER_REPO:-glpi}"
 
 ## Initialization
 set -e
@@ -12,12 +15,13 @@ else
   image_building_name="${DOCKER_IMAGE}:building"
 fi
 docker_run_options='--detach'
+echo "-> use image name '${image_building_name}' for tests"
 
 
 ## Prepare
 if [[ -z $(which container-structure-test 2>/dev/null) ]]; then
   echo "Retrieving structure-test binary...."
-  if [[ "$TRAVIS_OS_NAME" != 'linux' ]]; then
+  if [[ -n "${TRAVIS_OS_NAME}" && "$TRAVIS_OS_NAME" != 'linux' ]]; then
     echo "container-structure-test only released for Linux at this time."
     echo "To run on OSX, clone the repository and build using 'make'."
     exit 1

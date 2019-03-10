@@ -30,6 +30,7 @@ if [ -n ${IMAGE_VARIANT} ]; then
 else
   image_building_name="${DOCKER_IMAGE}:building"
 fi
+echo "-> use image name '${image_building_name}' for publish"
 
 application_version=`docker inspect -f '{{ index .Config.Labels "application.glpi.version"}}' ${image_building_name}`
 
