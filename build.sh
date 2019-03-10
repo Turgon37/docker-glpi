@@ -3,8 +3,6 @@
 ## Global settings
 # image name
 DOCKER_IMAGE="${DOCKER_REPO:-glpi}"
-# "production" branch
-PRODUCTION_BRANCH=${PRODUCTION_BRANCH:-master}
 # use dockefile
 DOCKERFILE_PATH=${DOCKERFILE_PATH:-Dockerfile}
 
@@ -18,8 +16,6 @@ if [ -z "$GLPI_VERSION" ]; then
     echo 'Error during fetch last glpi version'
     exit 1
   fi
-  # no glpi fixed version => latest build
-  image_tags="latest ${GLPI_VERSION}-latest"
   test -n "$GLPI_VERSION"
 fi
 echo "-> selected GLPI version '${GLPI_VERSION}'"
@@ -35,42 +31,11 @@ fi
 test -n "${VCS_REF}"
 echo "-> current vcs reference '${VCS_REF}'"
 
-# If empty branch, fetch the current from local git rpo
-if [ -n "${SOURCE_BRANCH}" ]; then
-  VCS_BRANCH="${SOURCE_BRANCH}"
-elif [ -n "${TRAVIS_BRANCH}" ]; then
-  VCS_BRANCH="${TRAVIS_BRANCH}"
-else
-  VCS_BRANCH="`git rev-parse --abbrev-ref HEAD`"
-fi
-test -n "${VCS_BRANCH}"
-echo "-> current vcs branch '${VCS_BRANCH}'"
-
-# set the docker tag prefix if needed
-if [ "${VCS_BRANCH}" != "${PRODUCTION_BRANCH}" ]; then
-  docker_tags_prefix="${VCS_BRANCH}-"
-fi
-echo "-> use tag prefix '${docker_tags_prefix}'"
-
 # Get the current image static version
 image_version=`cat VERSION`
 echo "-> use image version '${image_version}'"
 
-# customs tags
-image_tags="${image_tags} ${GLPI_VERSION}-${image_version}"
-echo "-> use image tags '${image_tags}'"
-
-# finals
-image_final_tags=()
-for tag in $image_tags; do
-  image_final_tags+=("${docker_tags_prefix}${tag}")
-done
-image_final_tags=`echo -n "${image_final_tags[*]}" | tr ' ' '\n' | uniq | tr '\n' ' '`
-echo "-> use final image tags list '${image_final_tags}'"
-echo "${image_final_tags}" > ${PWD}/_image_tags
-
-echo "-> use image name '${DOCKER_IMAGE}'"
-
+# Compute variant from dockerfile name
 if ! [ -f ${DOCKERFILE_PATH} ]; then
   echo 'You must select a valid dockerfile with DOCKERFILE_PATH' 1>&2
   exit 1
@@ -84,7 +49,6 @@ else
   image_building_name="${DOCKER_IMAGE}:building"
 fi
 echo "-> use image name '${image_building_name}' for build"
-echo "${image_building_name}" > ${PWD}/_image_build
 
 
 ## Build image

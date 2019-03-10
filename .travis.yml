@@ -6,6 +6,8 @@ services:
   - docker
 
 env:
+  global:
+    - DOCKER_REPO: turgon37/glpi
   matrix:
     # Provide a list of GLPI version to build
     - GLPI_VERSION: ''
