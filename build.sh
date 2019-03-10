@@ -4,7 +4,7 @@
 # image name
 DOCKER_IMAGE="${DOCKER_REPO:-glpi}"
 # use dockefile
-DOCKERFILE_PATH=${DOCKERFILE_PATH:-Dockerfile}
+DOCKERFILE_PATH="Dockerfile_${IMAGE_VARIANT}"
 
 ## Initialization
 set -e
@@ -40,16 +40,13 @@ if ! [ -f ${DOCKERFILE_PATH} ]; then
   echo 'You must select a valid dockerfile with DOCKERFILE_PATH' 1>&2
   exit 1
 fi
-variant=`basename ${DOCKERFILE_PATH}`
-variant=`echo ${variant#Dockerfile_} | tr -d '_'`
-if [ -n ${variant} ]; then
-  image_building_name="${DOCKER_IMAGE}:building_${variant}"
-  echo "-> set image variant '${variant}' for build"
+if [ -n ${IMAGE_VARIANT} ]; then
+  image_building_name="${DOCKER_IMAGE}:building_${IMAGE_VARIANT}"
+  echo "-> set image variant '${IMAGE_VARIANT}' for build"
 else
   image_building_name="${DOCKER_IMAGE}:building"
 fi
 echo "-> use image name '${image_building_name}' for build"
-
 
 ## Build image
 echo "=> building '${image_building_name}' with image version '${image_version}'"

@@ -23,16 +23,10 @@ fi
 
 image_version=`cat VERSION`
 
-# Compute variant from dockerfile name
-if ! [ -f ${DOCKERFILE_PATH} ]; then
-  echo 'You must select a valid dockerfile with DOCKERFILE_PATH' 1>&2
-  exit 1
-fi
-variant=`basename ${DOCKERFILE_PATH}`
-variant=`echo ${variant#Dockerfile_} | tr -d '_'`
-if [ -n ${variant} ]; then
-  image_building_name="${DOCKER_IMAGE}:building_${variant}"
-  echo "-> set image variant '${variant}' for build"
+if [ -n ${IMAGE_VARIANT} ]; then
+  image_building_name="${DOCKER_IMAGE}:building_${IMAGE_VARIANT}"
+  image_tags_prefix="${IMAGE_VARIANT}-"
+  echo "-> set image variant '${IMAGE_VARIANT}' for build"
 else
   image_building_name="${DOCKER_IMAGE}:building"
 fi
@@ -57,7 +51,7 @@ echo "-> current vcs branch '${VCS_BRANCH}'"
 
 # set the docker tag prefix if needed
 if [ "${VCS_BRANCH}" != "${PRODUCTION_BRANCH}" ]; then
-  image_tags_prefix="${VCS_BRANCH}-"
+  image_tags_prefix="${VCS_BRANCH}-${image_tags_prefix}"
   echo "-> use tag prefix '${image_tags_prefix}'"
 fi
 

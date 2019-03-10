@@ -11,9 +11,9 @@ env:
   matrix:
     # Provide a list of GLPI version to build
     - GLPI_VERSION: ''
-      DOCKERFILE_PATH: Dockerfile_nginx_56
+      IMAGE_VARIANT: nginx-56
     - GLPI_VERSION: 9.3.3
-      DOCKERFILE_PATH: Dockerfile_nginx_56
+      IMAGE_VARIANT: nginx-56
 
 script:
   #
