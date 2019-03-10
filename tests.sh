@@ -94,19 +94,6 @@ fi
 stop_and_remove_container "${image_name}"
 
 
-#4 Test plugins installation with old variable
-echo '-> 4 Test plugins installation with old variable'
-image_name=glpi_4
-docker run $docker_run_options --name "${image_name}" --env='GLPI_PLUGINS=fusioninventory|https://github.com/fusioninventory/fusioninventory-for-glpi/releases/download/glpi9.3%2B1.2/fusioninventory-9.3+1.2.tar.gz' "${image_building_name}"
-wait_for_string_in_container_logs "${image_name}" 'Starting up...'
-# test
-if ! docker exec "${image_name}" test -d plugins/fusioninventory; then
-  docker logs "${image_name}"
-  false
-fi
-stop_and_remove_container "${image_name}"
-
-
 #5 Test web access
 echo '-> 5 Test web access'
 image_name=glpi_5

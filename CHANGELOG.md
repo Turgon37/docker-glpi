@@ -14,6 +14,7 @@ Items starting with `DEPRECATE` are important deprecation notices.
 - Replace start.sh by entrypoint
 - Remove cron job from supervisord
 - Add /opt/scripts/cronwrapper.py to format cron output
+- Remove support of GLPI_PLUGINS to install plugins, you must use GLPI_INSTALL_PLUGINS
 
 ## 2.4.2 (2018-12-16)
 
