@@ -32,8 +32,11 @@ if __name__ == '__main__':
     parser.add_argument('-c', '--command', dest='command', action='store',
                         default='/usr/local/bin/php',
                         help='The path to the final cron')
+    parser.add_argument('--forward-stderr', dest='forward_stderr', action='store_true',
+                        default=False,
+                        help='The arguments list')
     parser.add_argument('args', nargs='*',
-                        default=[os.path.join(os.getenv('GLPI_PATHS_ROOT'), 'front/cron.php')],
+                        default=[os.path.join(os.getenv('GLPI_PATHS_ROOT', '/'), 'front/cron.php')],
                         help='The arguments list')
     args = parser.parse_args()
     command_path = os.path.realpath(args.command)
@@ -72,5 +75,7 @@ if __name__ == '__main__':
 
     log['stdout_size'] = len(log['stdout'])
     log['stderr_size'] = len(log['stderr'])
-    print(json.dumps(log))
+    sys.stdout.write(json.dumps(log)+'\n')
+    if args.forward_stderr:
+      sys.stderr.write(log['stderr']+'\n')
     sys.exit(0)
