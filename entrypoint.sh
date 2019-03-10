@@ -91,9 +91,9 @@ cd - > /dev/null
 
 
 ## Remove installer
-echo 'Removing installer if needed...'
 # used to remove the installer after first installation
 if [ "x${GLPI_REMOVE_INSTALLER}" = 'xyes' ]; then
+  echo 'Removing installer if needed...'
   rm -f "${basedir}/install/install.php"
 fi
 
@@ -111,14 +111,13 @@ done
 
 
 ## Files permissions
-echo 'Set files permissions...'
 # address issue https://github.com/Turgon37/docker-glpi/issues/2
 if [ "x${GLPI_CHMOD_PATHS_FILES}" = 'xyes' ]; then
+  echo 'Set files permissions...'
   chown -R www-data:www-data "${basedir}/files"
   chmod -R u=rwX,g=rX,o=--- "${basedir}/files"
 fi
 
 
 ## Start
-echo 'Starting up...'
-exec /usr/bin/supervisord --configuration /etc/supervisord.conf
+exec "$@"

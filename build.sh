@@ -1,26 +1,25 @@
 #!/usr/bin/env bash
 
-
 ## Global settings
 # image name
 DOCKER_IMAGE="${DOCKER_REPO:-glpi}"
 # "production" branch
 PRODUCTION_BRANCH=${PRODUCTION_BRANCH:-master}
-
-
-## Local settings
-alpine_version=`cat Dockerfile | grep --perl-regexp --only-matching '(?<=FROM alpine:)[0-9.]+'`
-arch=`uname --machine`
-
+# use dockefile
+DOCKERFILE_PATH=${DOCKERFILE_PATH:-Dockerfile}
 
 ## Initialization
 set -e
 
 # If empty version, fetch the latest from repository
 if [ -z "$GLPI_VERSION" ]; then
-  GLPI_VERSION=`curl https://api.github.com/repos/glpi-project/glpi/releases/latest | grep --perl-regexp --only-matching '(?<=tag_name": ")[a-z0-9.-]+'`
+  GLPI_VERSION=`curl --fail -s https://api.github.com/repos/glpi-project/glpi/releases/latest | grep --perl-regexp --only-matching '(?<=tag_name": ")[a-z0-9.-]+'`
+  if [ $? -ne 0 ]; then
+    echo 'Error during fetch last glpi version'
+    exit 1
+  fi
   # no glpi fixed version => latest build
-  image_tags="${image_tags} latest ${GLPI_VERSION}-latest"
+  image_tags="latest ${GLPI_VERSION}-latest"
   test -n "$GLPI_VERSION"
 fi
 echo "-> selected GLPI version '${GLPI_VERSION}'"
@@ -62,17 +61,28 @@ image_tags="${image_tags} ${GLPI_VERSION}-${image_version}"
 echo "-> use image tags '${image_tags}'"
 
 # finals
-image_final_tags=""
+image_final_tags=()
 for tag in $image_tags; do
-  image_final_tags="${image_final_tags} ${docker_tags_prefix}${tag}"
+  image_final_tags+=("${docker_tags_prefix}${tag}")
 done
-image_final_tags=`echo ${image_final_tags} | tr ' ' '\n' | uniq | tr '\n' ' '`
+image_final_tags=`echo -n "${image_final_tags[*]}" | tr ' ' '\n' | uniq | tr '\n' ' '`
 echo "-> use final image tags list '${image_final_tags}'"
-echo "${image_final_tags}" > ${PWD}/_tags
+echo "${image_final_tags}" > ${PWD}/_image_tags
 
 echo "-> use image name '${DOCKER_IMAGE}'"
 
-image_building_name="${DOCKER_IMAGE}:building"
+if ! [ -f ${DOCKERFILE_PATH} ]; then
+  echo 'You must select a valid dockerfile with DOCKERFILE_PATH' 1>&2
+  exit 1
+fi
+variant=`basename ${DOCKERFILE_PATH}`
+variant=`echo ${variant#Dockerfile_} | tr -d '_'`
+if [ -n ${variant} ]; then
+  image_building_name="${DOCKER_IMAGE}:building_${variant}"
+  echo "-> set image variant '${variant}' for build"
+else
+  image_building_name="${DOCKER_IMAGE}:building"
+fi
 echo "-> use image name '${image_building_name}' for build"
 echo "${image_building_name}" > ${PWD}/_image_build
 
@@ -80,7 +90,6 @@ echo "${image_building_name}" > ${PWD}/_image_build
 ## Build image
 echo "=> building '${image_building_name}' with image version '${image_version}'"
 docker build --build-arg "GLPI_VERSION=${GLPI_VERSION}" \
-             --label 'maintainer=Pierre GINDRAUD <pgindraud@gmail.com>' \
              --label "org.label-schema.build-date=`date -u +'%Y-%m-%dT%H:%M:%SZ'`" \
              --label 'org.label-schema.name=glpi' \
              --label 'org.label-schema.description=GLPI web application' \
@@ -92,5 +101,5 @@ docker build --build-arg "GLPI_VERSION=${GLPI_VERSION}" \
              --label 'org.label-schema.schema-version=1.0' \
              --label "application.glpi.version=${GLPI_VERSION}" \
              --tag "${image_building_name}" \
-             --file "${DOCKERFILE_PATH:-Dockerfile}" \
+             --file "${DOCKERFILE_PATH}" \
              .

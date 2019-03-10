@@ -33,6 +33,32 @@ source ${PWD}/_tools.sh
 container-structure-test \
     test --image "${image_building_name}" --config ./tests.yml
 
+## Ensure that required php extensions are installed
+extensions=`docker run --rm "${image_building_name}" php -m`
+for ext in apcu \
+           ctype \
+           curl \
+           dom \
+           gd \
+           imap \
+           json \
+           ldap \
+           pdo_mysql \
+           phar \
+           mysqli \
+           openssl \
+           opcache \
+           soap \
+           xml \
+           xmlreader \
+           xmlrpc \
+           zlib; do
+  if ! echo "${extensions}" | grep -qi $ext; then
+    echo "missing PHP extension '$ext'" 1>&2
+    exit 1
+  fi
+done
+
 
 #2 Test plugins installation with tar.bz2
 echo '-> 2 Test plugins installation with tar.bz2'
