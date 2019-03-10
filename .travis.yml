@@ -7,13 +7,13 @@ services:
 
 env:
   global:
-    - DOCKER_REPO: turgon37/glpi
+    - DOCKER_REPO=turgon37/glpi
+    - secure: 'AgdUC6iQJtb1+1A4wgIYMMDGWGWZ3sy+OIwSaJ91D6hKyFfkPTNBs6Ffrc+DrGwFttC9PohGGoU3BhDd6nBYaLC69CWK1neb8Rg3vQC/vYbdxDtI/e2Pi9Xg0D39yFqaadfFmWgUNHrPe0uwF3BfI9yGvUk/giAKyWOSi/tKcPeoOZpXj6VhCESdlim1XC7vKJ2zvHx6IAJcadUe74d4IZpLsAKegid5gPy0Dvbo8HAMlIO6MR2knzJB1Yv3UM+6+l6Zwxec73qC2MtFTr1umrxw38ABzXF+ZPlMHPGT0cl6PZ9xMWpRKyKDlzLpE+78yW+/UYdGvb/hx3Wm2VFdBUCciwOHew1EPEy/UK/1909V0R6uIRdf3wclBAhj9XAP73EhcshV35qw8QHoPmRtfdfkMZ4EttwusNZVIDVE2CJoqGtO6DsdSOWG1egh9TdlvqGWt8VHaXwW+nsfOrfChbo6JILw1ca0VEc54l9OLjbVGqBXekLjPrcS9gw0KZDNGJO3JIbn5lKGY51c7xJwgsCWZAPOqCtkI8KPLZyu5aMUTfhLkFZ5VT+RQDRoBQeZi1Ul4YNPmywM7vZCFvtcUHNJ4wUEyucZT6cKYgSu7dVLwmVtVwUdkg6vqnpFFXsRM2lOukBGyeZ68yk3196XrrvP/CUGf0I1CedGNdRI6ws='
+    - secure: 'WsO3+E1yw4nW/EDi6BumfXVWxRbW0Lp6R6HuBAeKCXYRhi/5l6GdWOsoIdT+jJ0mbMnHLqN+ekUd6uuy3djbSeFaxMnljSEvvRnTBDa6rd9FRYaboc5R3tCYlazoCZjOd52gcZW2+upbTAPRlZf9wcXRP/Wnq+/0yX7ae8MZpFRIgwpBwyc6hyettfARsLsEz8eH+jAGPhjc1tD/DxTw/Va4HvlrOG0RCyuJE/koiAvjQW6/vGgxhVFGs+nXp1pJcFaHd/dwYdD4c3AnEZqRpFR7tRRvf4lnfjjm9LBWYlQv43gcypIyhAcJ43XVL9Ec4uffSI53ozOBMy7Ke1UzdV0c9tKUuwa2M/lVX4+qGPLM7mZ751SUfZkTmJ7+uyqubsKJlbzl89uiUtTJGIRkgyM92K6WJPJV9PodWmbvu+HzAKaikf7VQS5LTkDX9BCK6AlTBqYEJ3wB9CBkDEMeC1Q5Q2E12vdnSxaR9v68Qk6hyLobRbNiXiUSxxD8o+Sdq4ZwGwmXcQFQUf6BEtZzWoNqucCR/OaQP7Uvi/8zouOiBCNx9ygeOFhh7O9u7YdELuincEAOap1IuGNHtpNqcCscmIIkvl+JQushg6NmWYnaSGIHIc2iSSRCdGUk+ZPTm8RZtkzXz2RNWOISanvrZ0CfpzzdhbV8Fy9q+FpvbUY='
   matrix:
     # Provide a list of GLPI version to build
-    - GLPI_VERSION: ''
-      IMAGE_VARIANT: nginx-56
-    - GLPI_VERSION: 9.3.3
-      IMAGE_VARIANT: nginx-56
+    - GLPI_VERSION='' IMAGE_VARIANT=nginx-56
+    - GLPI_VERSION=9.3.3 IMAGE_VARIANT=nginx-56
 
 script:
   #
@@ -24,4 +24,10 @@ script:
   #
   ## Run tests
   #
-  - ./tests.sh
+  - ./tests.sh && touch _test_ok
+
+  #
+  ## Publish
+  #
+  - '[ "$TRAVIS_PULL_REQUEST" == "false" ] || exit 0'
+  - '[ "$TRAVIS_SECURE_ENV_VARS" == "true" -a -f _test_ok ] && ./publish.sh'

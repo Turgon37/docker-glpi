@@ -21,9 +21,14 @@ else
   exit 1
 fi
 
+if [[ -z $DOCKERHUB_REGISTRY_USERNAME" || -z "$DOCKERHUB_REGISTRY_PASSWORD" ]]; then
+  echo 'ERROR: missing one of the registry credential DOCKERHUB_REGISTRY_USERNAME DOCKERHUB_REGISTRY_PASSWORD' 1>&2
+  exit 1
+fi
+
 image_version=`cat VERSION`
 
-if [ -n ${IMAGE_VARIANT} ]; then
+if [[ -n ${IMAGE_VARIANT} ]]; then
   image_building_name="${DOCKER_IMAGE}:building_${IMAGE_VARIANT}"
   image_tags_prefix="${IMAGE_VARIANT}-"
   echo "-> set image variant '${IMAGE_VARIANT}' for build"
@@ -34,15 +39,15 @@ echo "-> use image name '${image_building_name}' for publish"
 
 application_version=`docker inspect -f '{{ index .Config.Labels "application.glpi.version"}}' ${image_building_name}`
 
-if [ -z "$GLPI_VERSION" ]; then
+if [[ -z "$GLPI_VERSION" ]]; then
   # no fixed application version => latest build
   image_tags="latest ${application_version}-latest"
 fi
 
 # If empty branch, fetch the current from local git rpo
-if [ -n "${SOURCE_BRANCH}" ]; then
+if [[ -n "${SOURCE_BRANCH}" ]]; then
   VCS_BRANCH="${SOURCE_BRANCH}"
-elif [ -n "${TRAVIS_BRANCH}" ]; then
+elif [[ -n "${TRAVIS_BRANCH}" ]]; then
   VCS_BRANCH="${TRAVIS_BRANCH}"
 else
   VCS_BRANCH="`git rev-parse --abbrev-ref HEAD`"
@@ -79,6 +84,9 @@ for tag in $image_final_tags; do
   fi
 done
 
+## Login to registry
+echo "$DOCKERHUB_REGISTRY_PASSWORD" | docker login --username="$DOCKERHUB_REGISTRY_USERNAME" --password-stdin
+
 ## Push images
 for tag in $image_final_tags; do
   echo "=> tag image '${image_building_name}' as '${DOCKER_IMAGE}:${tag}'"
@@ -86,3 +94,6 @@ for tag in $image_final_tags; do
   echo "=> push image '${DOCKER_IMAGE}:${tag}'"
   docker push "${DOCKER_IMAGE}:${tag}"
 done
+
+## Logout from registry
+docker logout
