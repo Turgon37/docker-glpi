@@ -34,7 +34,7 @@ if __name__ == '__main__':
                         help='The path to the final cron')
     parser.add_argument('--forward-stderr', dest='forward_stderr', action='store_true',
                         default=False,
-                        help='The arguments list')
+                        help='If True, forward script stderr to caller shell stderr')
     parser.add_argument('args', nargs='*',
                         default=[os.path.join(os.getenv('GLPI_PATHS_ROOT', '/'), 'front/cron.php')],
                         help='The arguments list')
