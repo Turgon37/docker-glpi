@@ -43,8 +43,6 @@ for ext in apcu \
            imap \
            json \
            ldap \
-           pdo_mysql \
-           phar \
            mysqli \
            openssl \
            opcache \
