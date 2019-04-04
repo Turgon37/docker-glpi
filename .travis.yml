@@ -9,16 +9,22 @@ env:
   global:
   matrix:
     # Provide a list of GLPI version to build
-    - GLPI_VERSION=''
-    - GLPI_VERSION=9.3.3
+    # - GLPI_VERSION='' IMAGE_VARIANT=nginx-56
+    - GLPI_VERSION=9.4.1.1 IMAGE_VARIANT=nginx-56
 
 script:
   #
   ## Build
   #
-  - ./hooks/build
+  - ./build.sh
 
   #
   ## Run tests
   #
-  - ./tests.sh
+  - ./tests.sh && touch _test_ok
+
+  #
+  ## Publish
+  #
+  - '[ "$TRAVIS_PULL_REQUEST" == "false" ] || exit 0'
+  - '[ "$TRAVIS_SECURE_ENV_VARS" == "true" -a -f _test_ok ] && ./publish.sh'

@@ -2,6 +2,26 @@
 
 Items starting with `DEPRECATE` are important deprecation notices.
 
+## 3.0.0 (2019-03-10)
+
+### Build process
+
+- Use the official PHP image as FROM
+- Separate image variant into dedicated dockerfiles
+
+### Image
+
+- Replace start.sh by entrypoint
+- Remove cron job from supervisord
+- Add /opt/scripts/cronwrapper.py to format cron output
+- Remove support of GLPI_PLUGINS to install plugins, you must use GLPI_INSTALL_PLUGINS
+
+## 2.4.2 (2018-12-16)
+
+### Image
+
+- Handle Timezone configuration #21
+
 ## 2.4.1 (2018-11-03)
 
 ### Image
