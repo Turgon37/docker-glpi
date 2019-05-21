@@ -8,9 +8,9 @@ This images contains an instance of GLPI web application served by nginx and php
 
 ## Supported tags and respective Dockerfile links
 
-* [`9.3.2`,`latest`](https://github.com/Turgon37/docker-glpi/blob/master/Dockerfile)
+* [`9.4.0`,`latest`](https://github.com/Turgon37/docker-glpi/blob/master/Dockerfile)
 
-* [`9.3.1`](https://github.com/Turgon37/docker-glpi/blob/master/Dockerfile)
+* [`9.3.3`](https://github.com/Turgon37/docker-glpi/blob/master/Dockerfile)
 
 
 ## Docker Informations
@@ -25,11 +25,10 @@ This images contains an instance of GLPI web application served by nginx and php
 
 | Environment               | Type             | Usage                                                                           |
 | --------------------------|----------------- | ------------------------------------------------------------------------------- |
+| TZ                        | String           | Contains the timezone                                                           |
 | GLPI_REMOVE_INSTALLER     | Boolean (yes/no) | Set to yes if it's not the first installation of glpi                           |
 | GLPI_CHMOD_PATHS_FILES    | Boolean (yes/no) | Set to yes to apply chmod/chown on /var/www/files (useful for host mount)       |
 | GLPI_INSTALL_PLUGINS      | String           | Comma separated list of plugins to install (see below)                          |
-| GLPI_ENABLE_CRONJOB       | Boolean (yes/no) | Enable internal execution of the cron.php                                       |
-
 
 The GLPI_INSTALL_PLUGINS variable must contains the list of plugins to install (download and extract) before starting glpi.
 This environment variable is a comma separated list of plugins definitions. Each plugin definition must be like this "PLUGINNAME|URL".
@@ -55,17 +54,8 @@ For better example see at the end of this file.
 
 ## Installation
 
-* Manual
-
 ```
-git clone
-./hooks/build
-```
-
-* or Automatic
-
-```
-docker pull turgon37/glpi:latest
+docker pull turgon37/glpi:nginx-56-latest
 ```
 
 
@@ -76,7 +66,7 @@ The first time you run this image, set the GLPI_REMOVE_INSTALLER variable to 'no
 ### Without database link (you can use an ip address or a domain name in the installer gui)
 
 ```
-docker run --name glpi --publish 8000:80 --volume data-glpi:/var/www/files --volume data-glpi-config:/var/www/config turgon37/glpi
+docker run --name glpi --publish 8000:80 --volume data-glpi:/var/www/files --volume data-glpi-config:/var/www/config turgon37/glpi:nginx-56-latest
 ```
 
 ### With database link (if you have any MySQL/MariaDB as a docker container)
@@ -96,7 +86,7 @@ docker run --name mysql -d --net glpi-network -e MYSQL_DATABASE=glpi -e MYSQL_US
 #### Start a GLPI instance
 
 ```
-docker run --name glpi --publish 8000:80 --volume data-glpi:/var/www/files --volume data-glpi-config:/var/www/config --net glpi-network turgon37/glpi
+docker run --name glpi --publish 8000:80 --volume data-glpi:/var/www/files --volume data-glpi-config:/var/www/config --net glpi-network turgon37/glpi:nginx-56-latest
 ```
 
 ### Docker-compose Specific configuration examples
@@ -106,7 +96,7 @@ docker run --name glpi --publish 8000:80 --volume data-glpi:/var/www/files --vol
 ```
 services:
   glpi:
-    image: turgon37/glpi
+    image: turgon37/glpi:nginx-56-latest
     environment:
       GLPI_REMOVE_INSTALLER: 'yes'
       GLPI_INSTALL_PLUGINS: 'fusioninventory|https://github.com/fusioninventory/fusioninventory-for-glpi/releases/download/glpi9.2%2B1.0/glpi-fusioninventory-9.2.1.0.tar.bz2'
