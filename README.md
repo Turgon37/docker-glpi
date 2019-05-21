@@ -98,13 +98,23 @@ services:
   glpi:
     image: turgon37/glpi:nginx-56-latest
     environment:
-      GLPI_REMOVE_INSTALLER: 'yes'
+      GLPI_REMOVE_INSTALLER: 'no'
       GLPI_INSTALL_PLUGINS: 'fusioninventory|https://github.com/fusioninventory/fusioninventory-for-glpi/releases/download/glpi9.2%2B1.0/glpi-fusioninventory-9.2.1.0.tar.bz2'
     ports:
       - 80
     volumes:
       - data-glpi-files:/var/www/files
       - data-glpi-config:/var/www/config
+
+  db:
+    image: mysql
+    restart: always
+    command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - 3306:3306
+
 volumes:
   data-glpi-files:
   data-glpi-config:
