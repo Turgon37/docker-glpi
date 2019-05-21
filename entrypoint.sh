@@ -71,7 +71,7 @@ function installPlugin() {
 }
 
 # run sartup action only if main command is given to entrypoint
-if expr match $1 '.*supervisord'; then
+if expr match $1 '.*supervisord' >/dev/null; then
   setTimezone
 
   echo "Installing plugins... in ${GLPI_PATHS_PLUGINS}"
@@ -118,6 +118,11 @@ if expr match $1 '.*supervisord'; then
     echo 'Set files permissions...'
     chown -R www-data:www-data "${basedir}/files"
     chmod -R u=rwX,g=rX,o=--- "${basedir}/files"
+  fi
+
+  # address issue https://github.com/Turgon37/docker-glpi/issues/27
+  if [ `stat -c %u ${basedir}/config` != `id -u www-data` ]; then
+    find . -maxdepth 1 -not -name files | xargs -r chown -R www-data:www-data
   fi
 fi
 
