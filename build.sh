@@ -1,4 +1,4 @@
-#!/usr/bin/env -S bash -x
+#!/bin/bash
 
 ## Global settings
 # image name
