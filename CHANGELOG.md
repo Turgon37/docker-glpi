@@ -2,6 +2,14 @@
 
 Items starting with `DEPRECATE` are important deprecation notices.
 
+## 3.0.1 (2019-05-21)
+
+### Build process
+
++ Fix empty SERVER_NAME php value when localhost is using
++ Fix issue #27 : related to applicative user uid's change
++ Fix #28 Add missing php packages and libs
+
 ## 3.0.0 (2019-03-10)
 
 ### Build process

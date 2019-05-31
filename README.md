@@ -10,7 +10,7 @@ This images contains an instance of GLPI web application served by nginx and php
 
 ## Supported tags and respective Dockerfile links
 
-* [`9.3.2-2.4.1`,`9.3.2-latest`,`latest`](https://github.com/Wolvverine/docker-glpi/blob/master/Dockerfile)
+* [`9.4.2-3.0.2.3`,`9.4.2-latest`,`latest`](https://github.com/Wolvverine/docker-glpi/blob/master/Dockerfile)
 
 
 ## Docker Informations
@@ -25,10 +25,10 @@ This images contains an instance of GLPI web application served by nginx and php
 
 | Environment               | Type             | Usage                                                                           |
 | --------------------------|----------------- | ------------------------------------------------------------------------------- |
+| TZ                        | String           | Contains the timezone                                                           |
 | GLPI_REMOVE_INSTALLER     | Boolean (yes/no) | Set to yes if it's not the first installation of glpi                           |
 | GLPI_CHMOD_PATHS_FILES    | Boolean (yes/no) | Set to yes to apply chmod/chown on /var/www/files (useful for host mount)       |
 | GLPI_INSTALL_PLUGINS      | String           | Comma separated list of plugins to install (see below)                          |
-| GLPI_ENABLE_CRONJOB       | Boolean (yes/no) | Enable internal execution of the cron.php                                       |
 
 
 The GLPI_INSTALL_PLUGINS variable must contains the list of plugins to install (download and extract) before starting glpi.
@@ -108,13 +108,23 @@ services:
   glpi:
     image: wolvverine/docker-glpi
     environment:
-      GLPI_REMOVE_INSTALLER: 'yes'
+      GLPI_REMOVE_INSTALLER: 'no'
       GLPI_INSTALL_PLUGINS: 'fusioninventory|https://github.com/fusioninventory/fusioninventory-for-glpi/releases/download/glpi9.3%2B1.2/fusioninventory-9.3+1.2.tar.gz'
     ports:
       - 80
     volumes:
       - data-glpi-files:/var/www/files
       - data-glpi-config:/var/www/config
+
+  db:
+    image: mysql
+    restart: always
+    command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - 3306:3306
+
 volumes:
   data-glpi-files:
   data-glpi-config:
