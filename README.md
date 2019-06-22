@@ -8,10 +8,10 @@ This images contains an instance of GLPI web application served by nginx and php
 
 ## Supported tags and respective Dockerfile links
 
-* [`9.4.0`,`latest`](https://github.com/Turgon37/docker-glpi/blob/master/Dockerfile)
+* Image variant with nginx and PHP5.6 [Dockerfile](https://github.com/Turgon37/docker-glpi/blob/master/Dockerfile_nginx-56)
 
-* [`9.3.3`](https://github.com/Turgon37/docker-glpi/blob/master/Dockerfile)
-
+    * `nginx-56-9.4.3-latest`, `nginx-56-latest`
+    * `nginx-56-9.3.3-latest`
 
 ## Docker Informations
 
@@ -51,6 +51,7 @@ For better example see at the end of this file.
 
 * Normalize log output
 * Propose splitted nginx/fpm images
+* Add prometheus exporter
 
 ## Installation
 
