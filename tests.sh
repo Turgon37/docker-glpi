@@ -1,17 +1,27 @@
 #!/usr/bin/env bash
 
+## Global settings
+# image name
+DOCKER_IMAGE="${DOCKER_REPO:-glpi}"
 
 ## Initialization
 set -e
 
-image_building_name=`cat ${PWD}/_image_build`
+if [ -n ${IMAGE_VARIANT} ]; then
+  image_building_name="${DOCKER_IMAGE}:building_${IMAGE_VARIANT}"
+  image_tags_prefix="${IMAGE_VARIANT}-"
+  echo "-> set image variant '${IMAGE_VARIANT}' for build"
+else
+  image_building_name="${DOCKER_IMAGE}:building"
+fi
 docker_run_options='--detach'
+echo "-> use image name '${image_building_name}' for tests"
 
 
 ## Prepare
 if [[ -z $(which container-structure-test 2>/dev/null) ]]; then
   echo "Retrieving structure-test binary...."
-  if [[ "$TRAVIS_OS_NAME" != 'linux' ]]; then
+  if [[ -n "${TRAVIS_OS_NAME}" && "$TRAVIS_OS_NAME" != 'linux' ]]; then
     echo "container-structure-test only released for Linux at this time."
     echo "To run on OSX, clone the repository and build using 'make'."
     exit 1
@@ -33,6 +43,30 @@ source ${PWD}/_tools.sh
 container-structure-test \
     test --image "${image_building_name}" --config ./tests.yml
 
+## Ensure that required php extensions are installed
+extensions=`docker run --rm "${image_building_name}" php -m`
+for ext in apcu \
+           ctype \
+           curl \
+           dom \
+           gd \
+           imap \
+           json \
+           ldap \
+           mysqli \
+           openssl \
+           opcache \
+           soap \
+           xml \
+           xmlreader \
+           xmlrpc \
+           zlib; do
+  if ! echo "${extensions}" | grep -qi $ext; then
+    echo "missing PHP extension '$ext'" 1>&2
+    exit 1
+  fi
+done
+
 
 #2 Test plugins installation with tar.bz2
 echo '-> 2 Test plugins installation with tar.bz2'
@@ -51,19 +85,6 @@ stop_and_remove_container "${image_name}"
 echo '-> 3 Test plugins installation with tar.gz'
 image_name=glpi_3
 docker run $docker_run_options --name "${image_name}" --env='GLPI_INSTALL_PLUGINS=fusioninventory|https://github.com/fusioninventory/fusioninventory-for-glpi/releases/download/glpi9.3%2B1.2/fusioninventory-9.3+1.2.tar.gz' "${image_building_name}"
-wait_for_string_in_container_logs "${image_name}" 'Starting up...'
-# test
-if ! docker exec "${image_name}" test -d plugins/fusioninventory; then
-  docker logs "${image_name}"
-  false
-fi
-stop_and_remove_container "${image_name}"
-
-
-#4 Test plugins installation with old variable
-echo '-> 4 Test plugins installation with old variable'
-image_name=glpi_4
-docker run $docker_run_options --name "${image_name}" --env='GLPI_PLUGINS=fusioninventory|https://github.com/fusioninventory/fusioninventory-for-glpi/releases/download/glpi9.3%2B1.2/fusioninventory-9.3+1.2.tar.gz' "${image_building_name}"
 wait_for_string_in_container_logs "${image_name}" 'Starting up...'
 # test
 if ! docker exec "${image_name}" test -d plugins/fusioninventory; then

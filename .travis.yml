@@ -1,4 +1,4 @@
----
+dist: xenial
 language: bash
 
 # Tell Travis to start Docker when it brings up an environment.
@@ -6,19 +6,29 @@ services:
   - docker
 
 env:
+  global:
+    - DOCKER_REPO=turgon37/glpi
+    - secure: 'C/95oCVHTBhQklEiZpmHDDEOkRHfHmRDTaXb7XfBtLJQPmx92MIEpuiaRra1jsuy2ssQV8yaCrEXOajbkfcNWwgO4iR+PsQOmak0VfMuH29t+8c6siq9S8dBhlaT/X0KR3jDvuUUyJfd+zY4MFrN6J4p4mELsCq5GM15fTQhVxa9wi0q17Lno0OCkYprtThw6a+rw2VvuqSGDLcBvPVxAAalZJtlgn9+h1kbnlju7CnyDOng5Csgb/16E1e7gEgO/uL7A5C+bAgJbEkA6PPwu8hec6IB2Q7DZ55WAortcGUTN9OiNEpAFM5AEXel061iA8Y53H7S2DJKLYvvEo5enk2C4h8t1Nott5g65joTbRG/3gjO4sR7cSM0A156tM9mkzqIOzeeGZXgz1+Ktl/4IPrP80kZfxqlQ1MMzlAxa9Rwq/Ne8ovjRzh3J//Udm80QmjvhYWXsQQ9gdaKYTgemp8Chld3ZRnyHgJcwwIOe39/ZjAWmuUOvkJiNxse4jySFwQrz3GbblpGBL6QAYb6VrXbo+Ddb6nhWKflXzaLWtH7VRMqhIJu+OKk336kqpr8vkMJMmT5l4e7NjjPGUgmURnxdj3rUxTASljZmUYcDYvDrOX6924BSzaYsMLwOcPOwzLXEGz85d44S+OiL8h77B39fVNBuDRFbvzPqh18Zyk='
+    - secure: 'lms0WcFqVGGse7M0YW0zGgLtlvlCRL0fPMls0Ayy8tRfNuDWyVPzgS7u9jmdeb/L/NMxiSOnHgEg5DMyWovcyR+l65A3tL2vKkp0hG6bV8vB48QZH3/8Cz1PQ4iEVwQaCFU751M+lZzJobK9H40d0ecou1q1f8yyBwpf3YK6J/Y2Haii0Fu1j61Mjt+AtsXfQWXYfYKbCxx/AZn9gNwW7PEd6r9KTgQBLMXVRDtXUeqFrRNH6EeUxeWvs1Ik1dHTuPh+VF06UfV48b3hLGi9CFjdOSqtpt6e3BM0fVLCL/IoLonmcxillw2ds0hUWG4e8snyIUrd/JcqtyK3nmJ7/MA6q8+zCqYNMMTPjmt6sNUzyXWEUrvoZbgZjEshE/8cMFlyfoK3wRvbv6USFNk22SWXGCe7nW6x7DJLCN8Hke2y5UIbVBR/IFcM1zjXvX7HHVW8+F0E0+mwXwnxlsi9PoszZo3tbZv6kznr3JhiHT7HbQm4oKZA9muh432i4uMrzqsvhGPSmE+ebVSRObN9GApjp5BX1H9HSyA8kgnfTpNzbCooBsiK0OEKBBtI1NgSRw0oJdralaEWfaMjomM2dAhoR5G0/0U9a9inOyZiXcIi8GUmuuEKcskQRrVhbqBHTB2XC3o5/wl7k3K1sfvoB7JBwrftXYQnxCoghFwCkJM='
   matrix:
     # Provide a list of GLPI version to build
-    - GLPI_VERSION=''
-    - GLPI_VERSION=9.1.3
-    - GLPI_VERSION=9.3.2
+    - GLPI_VERSION='' IMAGE_VARIANT=nginx-56
+    - GLPI_VERSION=9.3.3 IMAGE_VARIANT=nginx-56
 
 script:
   #
   ## Build
   #
-  - ./hooks/build
+  - ls -l
+  - ./build.sh
 
   #
   ## Run tests
   #
-  - ./tests.sh
+  - ./tests.sh && touch _test_ok
+
+  #
+  ## Publish
+  #
+  - '[ "$TRAVIS_PULL_REQUEST" == "false" ] || exit 0'
+  - '[ "$TRAVIS_SECURE_ENV_VARS" == "true" -a -f _test_ok ] && ./publish.sh'
