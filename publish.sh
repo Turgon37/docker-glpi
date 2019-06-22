@@ -42,6 +42,8 @@ application_version=`docker inspect -f '{{ index .Config.Labels "application.glp
 if [[ -z "$GLPI_VERSION" ]]; then
   # no fixed application version => latest build
   image_tags="latest ${application_version}-latest"
+else
+  image_tags="${application_version}-latest"
 fi
 
 # If empty branch, fetch the current from local git rpo

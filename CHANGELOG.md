@@ -2,6 +2,12 @@
 
 Items starting with `DEPRECATE` are important deprecation notices.
 
+## 3.0.2 (2019-06-22)
+
+### Build process
+
++ Add 'latest' tag on image version
+
 ## 3.0.1 (2019-05-21)
 
 ### Build process
