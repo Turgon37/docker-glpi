@@ -106,3 +106,15 @@ if ! curl -v http://localhost:8000 2>&1 | grep --quiet 'install/install.php'; th
   false
 fi
 stop_and_remove_container "${image_name}"
+
+#6 Test plugins installation with zip
+echo '-> 6 Test plugins installation with zip'
+image_name=glpi_6
+docker run $docker_run_options --name "${image_name}" --env='GLPI_INSTALL_PLUGINS=timezones|https://github.com/tomolimo/timezones/releases/download/2.4.1/timezones-2.4.1.zip' "${image_building_name}"
+wait_for_string_in_container_logs "${image_name}" 'Starting up...'
+# test
+if ! docker exec "${image_name}" test -d plugins/fusioninventory; then
+  docker logs "${image_name}"
+  false
+fi
+stop_and_remove_container "${image_name}"
