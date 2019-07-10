@@ -2,6 +2,12 @@
 
 Items starting with `DEPRECATE` are important deprecation notices.
 
+## 3.0.3 (2019-07-10)
+
+### Image
+
++ Configure TZ in php.ini
+
 ## 3.0.2 (2019-06-22)
 
 ### Build process
