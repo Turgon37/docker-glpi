@@ -14,6 +14,7 @@ function setTimezone() {
     fi
     ln -snf /usr/share/zoneinfo/$TZ /etc/localtime
     echo $TZ > /etc/timezone
+    echo -e "[Date]\ndate.timezone=${TZ}" > /usr/local/etc/php/conf.d/timezone.ini
   fi
 }
 
