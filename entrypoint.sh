@@ -55,6 +55,9 @@ function installPlugin() {
     *.tar.bz2)
       tar ${tar_options} -xj -f "${plugin_tmp_file}"
       ;;
+    *.zip)
+      unzip "${plugin_tmp_file}" -d "${GLPI_PATHS_PLUGINS}"
+      ;;
     *)
       echo "..#ERROR# unknown extension for ${file}. Please open an issue or make a PR to https://github.com/Turgon37/docker-glpi" 1>&2
       false
