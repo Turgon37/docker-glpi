@@ -2,6 +2,10 @@
 
 Items starting with `DEPRECATE` are important deprecation notices.
 
+## 3.1.0 (2019-08-02)
+
++ Add support for zipped plugins
+
 ## 3.0.3 (2019-07-10)
 
 ### Image
