@@ -12,6 +12,8 @@ This images contains an instance of GLPI web application served by nginx and php
 
 * [`9.4.2-3.0.2.3`,`9.4.2-latest`,`latest`](https://github.com/Wolvverine/docker-glpi/blob/master/Dockerfile)
 
+    * `nginx-56-9.4.3-latest`, `nginx-56-latest`
+    * `nginx-56-9.3.3-latest`
 
 ## Docker Informations
 
@@ -29,7 +31,6 @@ This images contains an instance of GLPI web application served by nginx and php
 | GLPI_REMOVE_INSTALLER     | Boolean (yes/no) | Set to yes if it's not the first installation of glpi                           |
 | GLPI_CHMOD_PATHS_FILES    | Boolean (yes/no) | Set to yes to apply chmod/chown on /var/www/files (useful for host mount)       |
 | GLPI_INSTALL_PLUGINS      | String           | Comma separated list of plugins to install (see below)                          |
-
 
 The GLPI_INSTALL_PLUGINS variable must contains the list of plugins to install (download and extract) before starting glpi.
 This environment variable is a comma separated list of plugins definitions. Each plugin definition must be like this "PLUGINNAME|URL".
@@ -52,6 +53,7 @@ For better example see at the end of this file.
 
 * Normalize log output
 * Propose splitted nginx/fpm images
+* Add prometheus exporter
 
 ## Installation
 

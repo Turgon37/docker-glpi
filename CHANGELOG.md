@@ -2,6 +2,22 @@
 
 Items starting with `DEPRECATE` are important deprecation notices.
 
+## 3.1.0 (2019-08-02)
+
++ Add support for zipped plugins
+
+## 3.0.3 (2019-07-10)
+
+### Image
+
++ Configure TZ in php.ini
+
+## 3.0.2 (2019-06-22)
+
+### Build process
+
++ Add 'latest' tag on image version
+
 ## 3.0.1 (2019-05-21)
 
 ### Build process
