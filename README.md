@@ -95,28 +95,53 @@ docker run --name glpi --publish 8000:80 --volume data-glpi:/var/www/files --vol
 * Production configuration with already installed GLPI with FusionInventory and dashboard plugin :
 
 ```
+version: '2.1'
 services:
+
   glpi:
     image: turgon37/glpi:nginx-56-latest
     environment:
       GLPI_REMOVE_INSTALLER: 'no'
-      GLPI_INSTALL_PLUGINS: 'fusioninventory|https://github.com/fusioninventory/fusioninventory-for-glpi/releases/download/glpi9.2%2B1.0/glpi-fusioninventory-9.2.1.0.tar.bz2'
+      GLPI_INSTALL_PLUGINS: 'fusioninventory|https://github.com/fusioninventory/fusioninventory-for-glpi/releases/download/glpi9.2%2B1.0/glpi-fusioninventory-9.2.1.0.tar.bz2,dumpentity|https://forge.glpi-project.org/attachments/download/2089/glpi-dumpentity-1.4.0.tar.gz'
     ports:
-      - 80
+      - 127.0.0.1:8008:80
     volumes:
       - data-glpi-files:/var/www/files
       - data-glpi-config:/var/www/config
+    depends_on:
+      mysqldb:
+        condition: service_healthy
+    restart: always
+    networks:
+      glpi-network:
+        aliases:
+          - glpi
 
-  db:
+  mysqldb:
     image: mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     restart: always
     command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8
     environment:
       MYSQL_ROOT_PASSWORD: root
-    ports:
-      - 3306:3306
+    volumes:
+      - mysql-glpi-db:/var/lib/mysql
+    restart: always
+    networks:
+      glpi-network:
+        aliases:
+          - mysqldb
+
+networks:
+  glpi-network:
+    driver: bridge
 
 volumes:
   data-glpi-files:
   data-glpi-config:
+  mysql-glpi-db:
 ```
