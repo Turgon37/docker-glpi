@@ -33,6 +33,7 @@ ENV GLPI_INSTALL_PLUGINS ''
 # Install dependencies
 RUN set -ex; \
     apk --no-cache add \
+      apk-cron \
       curl \
       nginx \
       fping \
