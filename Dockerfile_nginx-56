@@ -51,9 +51,13 @@ RUN set -ex; \
       graphviz \
       iputils \
       net-snmp-libs \
+      py3-jinja2 \
       supervisor \
       tar \
       tzdata \
+    ; \
+    pip3 install \
+      j2cli \
     ; \
     apk add --no-cache --virtual .build-deps \
         $PHPIZE_DEPS \
@@ -108,29 +112,9 @@ COPY root/ /
 COPY /docker-entrypoint.sh /
 COPY /docker-entrypoint.d/* /docker-entrypoint.d/
 
-# Apply PHP FPM configuration
-RUN ( \
-      echo 'memory_limit=64M' ; \
-    ) > /usr/local/etc/php/conf.d/memory-limit.ini ; \
-    ( \
-      echo 'file_uploads=on' ; \
-      echo 'max_execution_time=600' ; \
-      echo 'register_globals=off' ; \
-      echo 'magic_quotes_sybase=off' ; \
-      echo 'session.auto_start=off' ; \
-      echo 'session.use_trans_sid=0' ; \
-      echo 'display_errors=stderr' ; \
-      echo 'display_startup_errors=On' ; \
-    ) > /usr/local/etc/php/conf.d/tuning.ini ; \
-    ( \
-      echo '[www]' ; \
-      echo 'listen = /var/run/php-fpm.sock' ; \
-      echo 'listen.owner = www-data' ; \
-      echo 'listen.group = nginx' ; \
-      echo 'listen.mode =' ; \
-    ) > /usr/local/etc/php-fpm.d/zzz-nginx.conf ; \
-    chmod -R g=rX,o=--- /var/www/* ; \
-    addgroup nginx www-data
+RUN chmod -R +x /docker-entrypoint.d/ \
+    && chmod -R g=rX,o=--- /var/www/* \
+    && addgroup nginx www-data
 
 EXPOSE 80/tcp
 VOLUME ["/var/www/files", "/var/www/config"]
