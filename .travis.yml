@@ -19,7 +19,6 @@ script:
   #
   ## Build
   #
-  - ls -l
   - ./build.sh
 
   #
