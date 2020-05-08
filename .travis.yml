@@ -13,7 +13,7 @@ env:
   matrix:
     # Provide a list of GLPI version to build
     - GLPI_VERSION='' IMAGE_VARIANT=nginx-56
-    - GLPI_VERSION=9.4.4 IMAGE_VARIANT=nginx-56
+    - GLPI_VERSION=9.4.5 IMAGE_VARIANT=nginx-56
 
 script:
   #
