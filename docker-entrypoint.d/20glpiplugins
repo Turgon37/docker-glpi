@@ -1,0 +1,80 @@
+#!/bin/sh
+
+set -e
+
+## Install plugins
+
+# Install a plugin
+# $1 : the name of the plugin (directory)
+# $2 : the url to download the plugin from
+function installPlugin() {
+  local plugin="${1}"
+  local url="${2}"
+  local file="$(basename "$url")"
+  local plugin_root_dir="${GLPI_PATHS_PLUGINS}/${plugin}"
+  local plugin_tmp_file="/tmp/${file}"
+
+  # continue if plugin already installed
+  if [ -d "${plugin_root_dir}" ]; then
+    echo "..plugin ${plugin} already installed"
+    return 0
+  fi
+  # Download plugin source if not exists
+  if [ ! -f "${plugin_tmp_file}" ]; then
+    echo "..downloading plugin '${plugin}' from '${url}'"
+    curl -sS --fail -o "${plugin_tmp_file}" -L "${url}"
+    if [ $? -ne 0 ]; then
+      echo "..#ERROR# failed to downalod plugin ${plugin} from url ${url}" 1>&2
+      return 1
+    fi
+  fi
+
+  # extract the archive according to the extension
+  echo "..extracting plugin '${plugin_tmp_file}'"
+  local tar_options="--directory=${GLPI_PATHS_PLUGINS}"
+  case "$plugin_tmp_file" in
+    *.tar.gz)
+      tar ${tar_options} -xz -f "${plugin_tmp_file}"
+      ;;
+    *.tar.bz2)
+      tar ${tar_options} -xj -f "${plugin_tmp_file}"
+      ;;
+    *.zip)
+      unzip "${plugin_tmp_file}" -d "${GLPI_PATHS_PLUGINS}"
+      ;;
+    *)
+      echo "..#ERROR# unknown extension for ${file}. Please open an issue or make a PR to https://github.com/Turgon37/docker-glpi" 1>&2
+      false
+      ;;
+  esac
+  if [ $? -ne 0 ]; then
+    echo "..#ERROR# failed to extract plugin ${plugin}" 1>&2
+    return 1
+  fi
+
+  # remove source and set file permissions
+  rm -f "${plugin_tmp_file}"
+  chown -R www-data:www-data "${plugin_root_dir}"
+  chmod -R g=rX,o=--- "${plugin_root_dir}"
+}
+
+
+echo "Installing GLPI plugins in ${GLPI_PATHS_PLUGINS}..."
+
+# Use the new syntax with comma separated list
+if [ ! -z "${GLPI_INSTALL_PLUGINS}" ]; then
+  OLDIFS=$IFS
+  IFS=','
+  for item in ${GLPI_INSTALL_PLUGINS}; do
+    IFS=$OLDIFS
+    name="${item%|*}"
+    url="${item#*|}"
+    installPlugin "${name}" "${url}"
+  done
+fi
+
+# Old deprecated plugins settings
+if [ ! -z "${GLPI_PLUGINS}" ]; then
+  echo "..#error# GLPI_PLUGINS is deprecated use the new GLPI_INSTALL_PLUGINS instead" 1>&2
+  exit 1
+fi

@@ -105,6 +105,8 @@ COPY --from=build_glpi --chown=www-data:www-data ${GLPI_PATHS_ROOT} ${GLPI_PATHS
 
 # Add some configurations files
 COPY root/ /
+COPY /docker-entrypoint.sh /
+COPY /docker-entrypoint.d/* /docker-entrypoint.d/
 
 # Apply PHP FPM configuration
 RUN ( \
@@ -137,7 +139,5 @@ WORKDIR "${GLPI_PATHS_ROOT}"
 HEALTHCHECK --interval=5s --timeout=3s --retries=3 \
     CMD curl --silent --fail http://localhost:80 || exit 1
 
-COPY /entrypoint.sh /
-
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["/usr/bin/supervisord", "--configuration", "/etc/supervisord.conf"]

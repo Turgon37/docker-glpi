@@ -1,0 +1,38 @@
+#!/bin/sh
+
+set -e
+
+basedir="${GLPI_PATHS_ROOT}"
+
+echo 'Configuring GLPI files...'
+
+## Remove installer
+# used to remove the installer after first installation
+if [ "x${GLPI_REMOVE_INSTALLER}" = 'xyes' ]; then
+  echo 'Removing installer if needed...'
+  rm -f "${basedir}/install/install.php"
+fi
+
+## Files structure
+echo "Create file structure..."
+for f in _cache _cron _dumps _graphs _lock _log _pictures _plugins _rss _sessions _tmp _uploads; do
+  dir="${basedir}/files/${f}"
+  if [ ! -d "${dir}" ]; then
+    mkdir -p "${dir}"
+    chown www-data:www-data "${dir}"
+    chmod u=rwX,g=rwX,o=--- "${dir}"
+  fi
+done
+
+## Files permissions
+# address issue https://github.com/Turgon37/docker-glpi/issues/2
+if [ "x${GLPI_CHMOD_PATHS_FILES}" = 'xyes' ]; then
+  echo 'Set files permissions...'
+  chown -R www-data:www-data "${basedir}/files"
+  chmod -R u=rwX,g=rX,o=--- "${basedir}/files"
+fi
+
+# address issue https://github.com/Turgon37/docker-glpi/issues/27
+if [ `stat -c %u ${basedir}/config` != `id -u www-data` ]; then
+  find . -maxdepth 1 -not -name files | xargs -r chown -R www-data:www-data
+fi
