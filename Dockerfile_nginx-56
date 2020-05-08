@@ -1,20 +1,32 @@
 # First stage : download glpi + build it
-FROM php:5.6-fpm-alpine3.8 as build_glpi
+FROM composer:latest as build_glpi
 
 ARG GLPI_VERSION
 ARG GLPI_PATHS_ROOT=/var/www
 
-RUN set -ex; \
-    mkdir -p "${GLPI_PATHS_ROOT}" ; \
-    curl --fail -o glpi.tgz -L "https://github.com/glpi-project/glpi/releases/download/${GLPI_VERSION}/glpi-${GLPI_VERSION}.tgz" ; \
-    tar -xzf glpi.tgz --strip 1 --directory ${GLPI_PATHS_ROOT} ; \
-    php -r "copy('https://getcomposer.org/installer', '/tmp/composer-setup.php');" ; \
-    export EXPECTED_SIGNATURE=`curl -s -o - https://composer.github.io/installer.sig` ; \
-    export CURRENT_SIGNATURE=`php -r "echo hash_file('SHA384', '/tmp/composer-setup.php');"` ; \
-    [ "$EXPECTED_SIGNATURE" == "$CURRENT_SIGNATURE" ] || (echo 'ERROR: Invalid installer signature' >&2; exit 1) ; \
-    php /tmp/composer-setup.php --install-dir=/tmp/ ; \
-    COMPOSER_HOME=/tmp/composer php /tmp/composer.phar require --no-interaction --working-dir ${GLPI_PATHS_ROOT} apereo/phpcas ; \
-    cd "${GLPI_PATHS_ROOT}" && rm -fv composer.json composer.lock
+RUN mkdir -p "${GLPI_PATHS_ROOT}"
+RUN curl -v --fail -o glpi.tgz -L "https://github.com/glpi-project/glpi/releases/download/${GLPI_VERSION}/glpi-${GLPI_VERSION}.tgz" \
+    && tar -xzf glpi.tgz --strip 1 --directory ${GLPI_PATHS_ROOT}
+
+WORKDIR "${GLPI_PATHS_ROOT}"
+
+RUN curl --fail --remote-name-all \
+      https://raw.githubusercontent.com/glpi-project/glpi/${GLPI_VERSION}/composer.json \
+      https://raw.githubusercontent.com/glpi-project/glpi/${GLPI_VERSION}/composer.lock \
+    && COMPOSER_HOME=/tmp/composer composer require \
+      --apcu-autoloader \
+      --classmap-authoritative \
+      --ignore-platform-reqs \
+      --no-interaction \
+      --no-progress \
+      --no-suggest \
+      --optimize-autoloader \
+      --prefer-dist \
+      --update-no-dev \
+      --working-dir ${GLPI_PATHS_ROOT} \
+      apereo/phpcas \
+    && rm -fv composer.json composer.lock
+
 
 # Second stage : build final image
 FROM php:5.6-fpm-alpine3.8
