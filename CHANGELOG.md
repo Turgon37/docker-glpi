@@ -16,6 +16,7 @@ Items starting with `DEPRECATE` are important deprecation notices.
 
 + Add PHP nginx-7.2 variant
 * Rewrite Dockerfile-56 composer stage
++ Add shellcheck tests
 
 
 ## 3.1.0 (2019-08-02)
