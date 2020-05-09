@@ -1,0 +1,7 @@
+#!/bin/sh
+
+set -e
+
+echo 'Configuring PHP FPM...'
+j2 /etc/php-fpm.d/nginx.conf.j2 -o /usr/local/etc/php-fpm.d/zzz-nginx.conf
+j2 /etc/php-fpm.d/custom.ini.j2 -o /usr/local/etc/php/conf.d/zzz-tuning.ini
