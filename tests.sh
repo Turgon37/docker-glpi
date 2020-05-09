@@ -18,7 +18,7 @@ echo "-> use image name '${image_building_name}' for tests"
 
 
 ## Prepare
-if [[ -z $(which container-structure-test 2>/dev/null) ]]; then
+if [[ -z $(command -v container-structure-test 2>/dev/null) ]]; then
   echo "Retrieving structure-test binary...."
   if [[ -n "${TRAVIS_OS_NAME}" && "$TRAVIS_OS_NAME" != 'linux' ]]; then
     echo "container-structure-test only released for Linux at this time."
