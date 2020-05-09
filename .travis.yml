@@ -16,6 +16,9 @@ env:
     - GLPI_VERSION='' IMAGE_VARIANT=nginx-56
     - GLPI_VERSION=9.4.5 IMAGE_VARIANT=nginx-56
 
+before_install:
+    - sudo apt install shellcheck
+
 script:
   #
   ## Build
