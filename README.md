@@ -98,7 +98,7 @@ Please refer to the GLPI documentations to handle this at database level https:/
 
 * Normalize log output
 * Propose splitted nginx/fpm images
-* Add prometheus exporter
+* Add prometheus exporter (https://github.com/vozlt/nginx-module-vts, https://github.com/bakins/php-fpm-exporter)
 
 ## Installation
 
