@@ -14,6 +14,8 @@ else
   image_building_name="${DOCKER_IMAGE}:building"
 fi
 docker_run_options='--detach'
+# string that proove that container is up
+container_up_string='GET /fpm-ping'
 echo "-> use image name '${image_building_name}' for tests"
 
 
@@ -78,7 +80,7 @@ done
 echo '-> 2 Test plugins installation with tar.bz2'
 image_name=glpi_2
 docker run $docker_run_options --name "${image_name}" --env='GLPI_INSTALL_PLUGINS=fusioninventory|https://github.com/fusioninventory/fusioninventory-for-glpi/releases/download/glpi9.3%2B1.1/fusioninventory-9.3.1.1.tar.bz2' "${image_building_name}"
-wait_for_string_in_container_logs "${image_name}" 'Starting up...'
+wait_for_string_in_container_logs "${image_name}" "${container_up_string}"
 # test
 if ! docker exec "${image_name}" test -d plugins/fusioninventory; then
   docker logs "${image_name}"
@@ -91,9 +93,22 @@ stop_and_remove_container "${image_name}"
 echo '-> 3 Test plugins installation with tar.gz'
 image_name=glpi_3
 docker run $docker_run_options --name "${image_name}" --env='GLPI_INSTALL_PLUGINS=fusioninventory|https://github.com/fusioninventory/fusioninventory-for-glpi/releases/download/glpi9.3%2B1.2/fusioninventory-9.3+1.2.tar.gz' "${image_building_name}"
-wait_for_string_in_container_logs "${image_name}" 'Starting up...'
+wait_for_string_in_container_logs "${image_name}" "${container_up_string}"
 # test
 if ! docker exec "${image_name}" test -d plugins/fusioninventory; then
+  docker logs "${image_name}"
+  false
+fi
+stop_and_remove_container "${image_name}"
+
+
+#4 Test timezone setting
+echo '-> 4 Test timezone'
+image_name=glpi_4
+docker run $docker_run_options --name "${image_name}" --env='TZ=Europe/Paris' "${image_building_name}"
+wait_for_string_in_container_logs "${image_name}" "${container_up_string}"
+# test
+if ! [[ $(docker exec "${image_name}" readlink -f /etc/localtime) =~ Europe/Paris$ ]]; then
   docker logs "${image_name}"
   false
 fi
@@ -118,7 +133,7 @@ stop_and_remove_container "${image_name}"
 echo '-> 6 Test plugins installation with zip'
 image_name=glpi_6
 docker run $docker_run_options --name "${image_name}" --env='GLPI_INSTALL_PLUGINS=timezones|https://github.com/tomolimo/timezones/releases/download/2.4.1/timezones-2.4.1.zip' "${image_building_name}"
-wait_for_string_in_container_logs "${image_name}" 'Starting up...'
+wait_for_string_in_container_logs "${image_name}" "${container_up_string}"
 # test
 if ! docker exec "${image_name}" test -d plugins/timezones; then
   docker logs "${image_name}"
