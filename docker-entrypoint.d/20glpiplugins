@@ -7,12 +7,12 @@ set -e
 # Install a plugin
 # $1 : the name of the plugin (directory)
 # $2 : the url to download the plugin from
-function installPlugin() {
-  local plugin="${1}"
-  local url="${2}"
-  local file="$(basename "$url")"
-  local plugin_root_dir="${GLPI_PATHS_PLUGINS}/${plugin}"
-  local plugin_tmp_file="/tmp/${file}"
+installPlugin() {
+  plugin="${1}"
+  url="${2}"
+  file="$(basename "$url")"
+  plugin_root_dir="${GLPI_PATHS_PLUGINS}/${plugin}"
+  plugin_tmp_file="/tmp/${file}"
 
   # continue if plugin already installed
   if [ -d "${plugin_root_dir}" ]; then
@@ -22,8 +22,7 @@ function installPlugin() {
   # Download plugin source if not exists
   if [ ! -f "${plugin_tmp_file}" ]; then
     echo "..downloading plugin '${plugin}' from '${url}'"
-    curl -sS --fail -o "${plugin_tmp_file}" -L "${url}"
-    if [ $? -ne 0 ]; then
+    if ! curl -sS --fail -o "${plugin_tmp_file}" -L "${url}"; then
       echo "..#ERROR# failed to downalod plugin ${plugin} from url ${url}" 1>&2
       return 1
     fi
@@ -31,12 +30,14 @@ function installPlugin() {
 
   # extract the archive according to the extension
   echo "..extracting plugin '${plugin_tmp_file}'"
-  local tar_options="--directory=${GLPI_PATHS_PLUGINS}"
+  tar_options="--directory=${GLPI_PATHS_PLUGINS}"
   case "$plugin_tmp_file" in
     *.tar.gz)
+      # shellcheck disable=SC2086
       tar ${tar_options} -xz -f "${plugin_tmp_file}"
       ;;
     *.tar.bz2)
+      # shellcheck disable=SC2086
       tar ${tar_options} -xj -f "${plugin_tmp_file}"
       ;;
     *.zip)
@@ -47,6 +48,7 @@ function installPlugin() {
       false
       ;;
   esac
+  # shellcheck disable=SC2181
   if [ $? -ne 0 ]; then
     echo "..#ERROR# failed to extract plugin ${plugin}" 1>&2
     return 1
@@ -62,7 +64,7 @@ function installPlugin() {
 echo "Installing GLPI plugins in ${GLPI_PATHS_PLUGINS}..."
 
 # Use the new syntax with comma separated list
-if [ ! -z "${GLPI_INSTALL_PLUGINS}" ]; then
+if [ -n "${GLPI_INSTALL_PLUGINS}" ]; then
   OLDIFS=$IFS
   IFS=','
   for item in ${GLPI_INSTALL_PLUGINS}; do
@@ -74,7 +76,7 @@ if [ ! -z "${GLPI_INSTALL_PLUGINS}" ]; then
 fi
 
 # Old deprecated plugins settings
-if [ ! -z "${GLPI_PLUGINS}" ]; then
+if [ -n "${GLPI_PLUGINS}" ]; then
   echo "..#error# GLPI_PLUGINS is deprecated use the new GLPI_INSTALL_PLUGINS instead" 1>&2
   exit 1
 fi

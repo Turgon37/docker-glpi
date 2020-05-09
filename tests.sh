@@ -7,9 +7,8 @@ DOCKER_IMAGE="${DOCKER_REPO:-glpi}"
 ## Initialization
 set -e
 
-if [ -n ${IMAGE_VARIANT} ]; then
+if [[ -n ${IMAGE_VARIANT} ]]; then
   image_building_name="${DOCKER_IMAGE}:building_${IMAGE_VARIANT}"
-  image_tags_prefix="${IMAGE_VARIANT}-"
   echo "-> set image variant '${IMAGE_VARIANT}' for build"
 else
   image_building_name="${DOCKER_IMAGE}:building"
@@ -34,17 +33,24 @@ fi
 
 # Download tools shim.
 if [[ ! -f _tools.sh ]]; then
-  curl -L -o ${PWD}/_tools.sh https://gist.github.com/Turgon37/2ba8685893807e3637ea3879ef9d2062/raw
+  curl -L -o "${PWD}/_tools.sh https://gist.github.com/Turgon37/2ba8685893807e3637ea3879ef9d2062/raw"
 fi
-source ${PWD}/_tools.sh
+# shellcheck disable=SC1090
+source "${PWD}/_tools.sh"
 
 
 ## Test
+
+# shell scripts tests
+# shellcheck disable=SC2038
+find . -name '*.sh' | xargs shellcheck
+
+# Image tests
 container-structure-test \
     test --image "${image_building_name}" --config ./tests.yml
 
 ## Ensure that required php extensions are installed
-extensions=`docker run --rm "${image_building_name}" php -m`
+extensions=$(docker run --rm "${image_building_name}" php -m)
 for ext in apcu \
            ctype \
            curl \

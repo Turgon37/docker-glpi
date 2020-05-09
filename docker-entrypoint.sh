@@ -4,7 +4,7 @@ set -e
 
 DIR=/docker-entrypoint.d
 
-if [[ -d "$DIR" ]]; then
+if [ -d "$DIR" ]; then
   /bin/run-parts --exit-on-error "$DIR" 1>&2
 fi
 
