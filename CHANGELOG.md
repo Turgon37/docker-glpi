@@ -7,12 +7,15 @@ Items starting with `DEPRECATE` are important deprecation notices.
 + Update glpi to 9.4.5 in CI
 + Move supervisord pidfile into /run
 + Update Docker healthcheck to use FPM ping endpoint
++ Make PHP configuration dynamic using environment on container runtime
 + Move php fpm configuration during entrypoint phase
 + Split entrypoint tasks into separated files
++ Update cronwrapper python version + remove empty line newline
 
 ### Build process
 
-+ Rewrite Dockerfile-56 composer stage
++ Add PHP nginx-7.2 variant
+* Rewrite Dockerfile-56 composer stage
 
 
 ## 3.1.0 (2019-08-02)
