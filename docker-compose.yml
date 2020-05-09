@@ -2,10 +2,13 @@ version: '2.1'
 services:
 
   glpi:
-    image: turgon37/glpi:nginx-56-latest
+    image: turgon37/glpi:nginx-72-latest
     environment:
       GLPI_REMOVE_INSTALLER: 'no'
-      GLPI_INSTALL_PLUGINS: 'fusioninventory|https://github.com/fusioninventory/fusioninventory-for-glpi/releases/download/glpi9.2%2B1.0/glpi-fusioninventory-9.2.1.0.tar.bz2,dumpentity|https://forge.glpi-project.org/attachments/download/2089/glpi-dumpentity-1.4.0.tar.gz'
+      GLPI_INSTALL_PLUGINS: "\
+        fusioninventory|https://github.com/fusioninventory/fusioninventory-for-glpi/releases/download/glpi9.2%2B1.0/glpi-fusioninventory-9.2.1.0.tar.bz2,\
+        dumpentity|https://forge.glpi-project.org/attachments/download/2089/glpi-dumpentity-1.4.0.tar.gz\
+        "
     ports:
       - 127.0.0.1:8008:80
     volumes:
