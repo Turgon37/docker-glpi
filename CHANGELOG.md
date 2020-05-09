@@ -2,6 +2,14 @@
 
 Items starting with `DEPRECATE` are important deprecation notices.
 
+## 3.2.1 (2020-05-10)
+
+### Build process
+
++ Add shellcheck tests
++ Add Timezone test
+
+
 ## 3.2.0 (2020-05-08)
 
 + Update glpi to 9.4.5 in CI
@@ -16,7 +24,6 @@ Items starting with `DEPRECATE` are important deprecation notices.
 
 + Add PHP nginx-7.2 variant
 * Rewrite Dockerfile-56 composer stage
-+ Add shellcheck tests
 
 
 ## 3.1.0 (2019-08-02)
