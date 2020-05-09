@@ -102,6 +102,19 @@ fi
 stop_and_remove_container "${image_name}"
 
 
+#4 Test timezone setting
+echo '-> 4 Test timezone'
+image_name=glpi_4
+docker run $docker_run_options --name "${image_name}" --env='TZ=Europe/Paris' "${image_building_name}"
+wait_for_string_in_container_logs "${image_name}" "${container_up_string}"
+# test
+if ! [[ $(docker exec "${image_name}" readlink -f /etc/localtime) =~ Europe/Paris$ ]]; then
+  docker logs "${image_name}"
+  false
+fi
+stop_and_remove_container "${image_name}"
+
+
 #5 Test web access
 echo '-> 5 Test web access'
 image_name=glpi_5
