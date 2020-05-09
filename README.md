@@ -88,6 +88,12 @@ On linux you can use the /etc/crontab file with a content similar to this one :
 ```
 
 
+### Timezone issues
+
+Timezone is handled at PHP level in the image since 2.4.2 version, but you might encounter issues if you use different timezone in your database engine.
+Please refer to the GLPI documentations to handle this at database level https://glpi-install.readthedocs.io/en/develop/timezones.html.
+
+
 ## Todo
 
 * Normalize log output
