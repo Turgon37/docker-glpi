@@ -27,7 +27,7 @@ Items starting with `DEPRECATE` are important deprecation notices.
 
 ### Image
 
-+ Configure TZ in php.ini
++ Configure TZ in php.ini (thanks @Wolvverine)
 
 
 ## 3.0.2 (2019-06-22)
@@ -65,7 +65,7 @@ Items starting with `DEPRECATE` are important deprecation notices.
 
 ### Image
 
-- Handle Timezone configuration #21
+- Handle Timezone configuration (thanks @Wolvverine) #21
 
 
 ## 2.4.1 (2018-11-03)
