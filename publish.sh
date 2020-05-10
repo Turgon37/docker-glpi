@@ -30,7 +30,6 @@ image_version=$(cat VERSION)
 
 if [[ -n ${IMAGE_VARIANT} ]]; then
   image_building_name="${DOCKER_IMAGE}:building_${IMAGE_VARIANT}"
-  image_tags_prefix="${IMAGE_VARIANT}-"
   echo "-> set image variant '${IMAGE_VARIANT}' for build"
 else
   image_building_name="${DOCKER_IMAGE}:building"
