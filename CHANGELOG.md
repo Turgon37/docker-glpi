@@ -2,6 +2,15 @@
 
 Items starting with `DEPRECATE` are important deprecation notices.
 
+## 3.2.2 (2020-05-10)
+
++ Fix docker HEALTHCHECK command
+
+### Build process
+
++ Improve publish script and edit pushed tags
+
+
 ## 3.2.1 (2020-05-10)
 
 ### Build process

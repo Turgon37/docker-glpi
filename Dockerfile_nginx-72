@@ -130,7 +130,7 @@ VOLUME ["/var/www/files", "/var/www/config"]
 WORKDIR "${GLPI_PATHS_ROOT}"
 
 HEALTHCHECK --interval=5s --timeout=3s --retries=3 \
-    CMD curl --silent http://127.0.0.1:80/fpm-ping | grep --quiet pong || exit 1
+    CMD curl --silent http://127.0.0.1:80/fpm-ping | grep -q pong || exit 1
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["/usr/bin/supervisord", "--configuration", "/etc/supervisord.conf"]
