@@ -56,7 +56,8 @@ if [[ "${VCS_BRANCH}" == "${PRODUCTION_BRANCH}" ]]; then
   if [[ -z "$GLPI_VERSION" ]]; then
     image_tags+=("${image_tags_prefix}latest" "${image_tags_prefix}${application_version}-latest")
   fi
-  if curl -s "https://hub.docker.com/v2/repositories/${username}/${repo}/tags/?page_size=100" | grep -q "\"name\": \"${image_tags_prefix}${application_version}-${image_version}\""; then
+  if ! curl -s "https://hub.docker.com/v2/repositories/${username}/${repo}/tags/?page_size=100" \
+       | grep --quiet "\"name\": \"${image_tags_prefix}${application_version}-${image_version}\""; then
     publish=true
   fi
 elif [[ "${VCS_BRANCH}" == "develop" ]]; then
