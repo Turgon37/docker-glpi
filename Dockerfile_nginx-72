@@ -71,6 +71,7 @@ RUN set -ex; \
     apk add --no-cache --virtual .build-deps \
         $PHPIZE_DEPS \
         autoconf \
+        bzip2-dev \
         coreutils \
         curl-dev \
         freetype-dev \
@@ -90,15 +91,18 @@ RUN set -ex; \
     docker-php-ext-configure gd --with-freetype-dir=/usr --with-png-dir=/usr --with-jpeg-dir=/usr; \
     docker-php-ext-configure ldap ; \
     docker-php-ext-install \
+       bz2 \
        exif \
        gd \
        imap \
+       intl \
        ldap \
        mysqli \
        opcache \
        snmp \
        soap \
        xmlrpc \
+       zip \
     ; \
     pecl install apcu && docker-php-ext-enable apcu ; \
     docker-php-source delete ; \

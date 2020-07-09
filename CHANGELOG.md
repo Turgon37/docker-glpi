@@ -2,6 +2,10 @@
 
 Items starting with `DEPRECATE` are important deprecation notices.
 
+## 3.2.3 (2020-07-09)
+
++ Add bz2, intl, zip extensions for GLPI 9.5
+
 ## 3.2.2 (2020-05-10)
 
 + Fix docker HEALTHCHECK command
