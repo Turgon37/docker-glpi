@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import argparse
 import os
@@ -76,6 +76,6 @@ if __name__ == '__main__':
     log['stdout_size'] = len(log['stdout'])
     log['stderr_size'] = len(log['stderr'])
     sys.stdout.write(json.dumps(log)+'\n')
-    if args.forward_stderr:
+    if args.forward_stderr and len(log['stderr']):
       sys.stderr.write(log['stderr']+'\n')
     sys.exit(0)

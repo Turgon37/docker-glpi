@@ -1,0 +1,15 @@
+[www]
+listen = /var/run/php-fpm.sock
+listen.owner = www-data
+listen.group = nginx
+listen.mode =
+pm.status_path = /fpm-status
+ping.path = /fpm-ping
+ping.response = pong
+pm = {{ env('PHPFPM_PM') }}
+pm.max_children = {{ env('PHPFPM_PM_MAX_CHILDREN') }}
+pm.start_servers = {{ env('PHPFPM_PM_START_SERVERS') }}
+pm.min_spare_servers = {{ env('PHPFPM_PM_MIN_SPARE_SERVERS') }}
+pm.max_spare_servers = {{ env('PHPFPM_PM_MAX_SPARE_SERVERS') }}
+pm.process_idle_timeout = {{ env('PHPFPM_PM_PROCESS_IDLE_TIMEOUT') }}
+pm.max_requests = {{ env('PHPFPM_PM_MAX_REQUEST') }}

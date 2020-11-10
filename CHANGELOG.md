@@ -2,21 +2,61 @@
 
 Items starting with `DEPRECATE` are important deprecation notices.
 
+## 3.2.3 (2020-07-09)
+
++ Add bz2, intl, zip extensions for GLPI 9.5
+
+## 3.2.2 (2020-05-10)
+
++ Fix docker HEALTHCHECK command
+
+### Build process
+
++ Improve publish script and edit pushed tags
+
+
+## 3.2.1 (2020-05-10)
+
+### Build process
+
++ Add shellcheck tests
++ Add Timezone test
+
+
+## 3.2.0 (2020-05-08)
+
++ Update glpi to 9.4.5 in CI
++ Move supervisord pidfile into /run
++ Update Docker healthcheck to use FPM ping endpoint
++ Make PHP configuration dynamic using environment on container runtime
++ Move php fpm configuration during entrypoint phase
++ Split entrypoint tasks into separated files
++ Update cronwrapper python version + remove empty line newline
+
+### Build process
+
++ Add PHP nginx-7.2 variant
+* Rewrite Dockerfile-56 composer stage
+
+
 ## 3.1.0 (2019-08-02)
 
 + Add support for zipped plugins
+
 
 ## 3.0.3 (2019-07-10)
 
 ### Image
 
-+ Configure TZ in php.ini
++ Configure TZ in php.ini (thanks @Wolvverine)
+
 
 ## 3.0.2 (2019-06-22)
 
 ### Build process
 
 + Add 'latest' tag on image version
+
 
 ## 3.0.1 (2019-05-21)
 
@@ -25,6 +65,7 @@ Items starting with `DEPRECATE` are important deprecation notices.
 + Fix empty SERVER_NAME php value when localhost is using
 + Fix issue #27 : related to applicative user uid's change
 + Fix #28 Add missing php packages and libs
+
 
 ## 3.0.0 (2019-03-10)
 
@@ -40,17 +81,20 @@ Items starting with `DEPRECATE` are important deprecation notices.
 - Add /opt/scripts/cronwrapper.py to format cron output
 - Remove support of GLPI_PLUGINS to install plugins, you must use GLPI_INSTALL_PLUGINS
 
+
 ## 2.4.2 (2018-12-16)
 
 ### Image
 
-- Handle Timezone configuration #21
+- Handle Timezone configuration (thanks @Wolvverine) #21
+
 
 ## 2.4.1 (2018-11-03)
 
 ### Image
 
 - Clean composer local cache to free 20M of space
+
 
 ## 2.4.0 (2018-11-03)
 
@@ -66,6 +110,7 @@ See this issue to upgrade from 9.2* to 9.3* : https://github.com/glpi-project/gl
 
 - DEPRECATE environment variable GLPI_PLUGINS in favor of GLPI_INSTALL_PLUGINS (will be removed in 3.0)
 
+
 ## 2.3.0 (2018-05-29)
 
 ### Image
@@ -73,6 +118,7 @@ See this issue to upgrade from 9.2* to 9.3* : https://github.com/glpi-project/gl
 + Add php5-soap #13
 + Add graphviz #12
 + Fix cronjob #11
+
 
 ## 2.2.0 (2018-04-02)
 
@@ -84,11 +130,13 @@ See this issue to upgrade from 9.2* to 9.3* : https://github.com/glpi-project/gl
 
 - DEPRECATE internal cronjobs handled by supervisor, it will be removed in 3.0 release.
 
+
 ## 2.1.0 (2018-02-04)
 
 ### Image
 
 + Add docker healthcheck
+
 
 ## 2.0.0 (2018-02-03)
 
@@ -107,6 +155,7 @@ See this issue to upgrade from 9.2* to 9.3* : https://github.com/glpi-project/gl
 ### Deprecation
 
 - Deprecate `GLPI_PLUGINS` environment variable in favor of GLPI_INSTALL_PLUGINS. GLPI_INSTALL_PLUGINS is comma separated and follow the same pattern as GLPI_PLUGINS.
+
 
 ## 1.0.0 (2017-08-07)
 
