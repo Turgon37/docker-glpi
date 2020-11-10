@@ -104,7 +104,7 @@ Please refer to the GLPI documentations to handle this at database level https:/
 ## Installation
 
 ```
-docker pull wolvverine/docker-glpi:nginx-56-latest
+docker pull wolvverine/docker-glpi:latest
 ```
 
 
@@ -115,7 +115,7 @@ The first time you run this image, set the GLPI_REMOVE_INSTALLER variable to 'no
 ### Without database link (you can use an ip address or a domain name in the installer gui)
 
 ```
-docker run --name glpi --publish 8000:80 --volume data-glpi:/var/www/files --volume data-glpi-config:/var/www/config wolvverine/glpi:nginx-56-latest
+docker run --name glpi --publish 8000:80 --volume data-glpi:/var/www/files --volume data-glpi-config:/var/www/config wolvverine/docker-glpi:latest
 ```
 
 ### With database link (if you have any MySQL/MariaDB as a docker container)
@@ -135,7 +135,7 @@ docker run --name mysql -d --net glpi-network -e MYSQL_DATABASE=glpi -e MYSQL_US
 #### Start a GLPI instance
 
 ```
-docker run --name glpi --publish 8000:80 --volume data-glpi:/var/www/files --volume data-glpi-config:/var/www/config --net glpi-network turgon37/glpi:nginx-56-latest
+docker run --name glpi --publish 8000:80 --volume data-glpi:/var/www/files --volume data-glpi-config:/var/www/config --net glpi-network wolvverine/docker-glpi:latest
 ```
 
 ### Docker-compose Specific configuration examples
@@ -147,7 +147,7 @@ version: '2.1'
 services:
 
   glpi:
-    image: wolvverine/glpi:nginx-56-latest
+    image: wolvverine/docker-glpi:latest
     environment:
       GLPI_REMOVE_INSTALLER: 'no'
       GLPI_INSTALL_PLUGINS: "
