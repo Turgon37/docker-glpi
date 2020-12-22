@@ -19,7 +19,6 @@ RUN curl --silent --show-error --fail --remote-name-all \
       --ignore-platform-reqs \
       --no-interaction \
       --no-progress \
-      --no-suggest \
       --optimize-autoloader \
       --prefer-dist \
       --update-no-dev \
