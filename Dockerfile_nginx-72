@@ -24,7 +24,7 @@ RUN curl --silent --show-error --fail --remote-name-all \
       --update-no-dev \
       --working-dir ${GLPI_PATHS_ROOT} \
       apereo/phpcas \
-    && rm -fv composer.json composer.lock
+    && rm -fv composer.json
 
 # Second stage : build final image
 FROM php:7.2-fpm-alpine3.11
