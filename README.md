@@ -100,7 +100,7 @@ Please refer to the GLPI documentations to handle this at database level https:/
 ## Installation
 
 ```
-docker pull turgon37/glpi:nginx-56-latest
+docker pull turgon37/glpi:nginx-72-latest
 ```
 
 
