@@ -53,7 +53,7 @@ application_version=$(docker inspect -f '{{ index .Config.Labels "application.gl
 publish=false
 if [[ "${VCS_BRANCH}" == "${PRODUCTION_BRANCH}" ]]; then
   image_tags=("${image_tags_prefix}${application_version}-${image_version}")
-  if [[ -z "$GLPI_VERSION" ]]; then
+  if [[ -z "${GLPI_VERSION}" || -n "${UPDATE_LATEST}" ]]; then
     image_tags+=("${image_tags_prefix}latest" "${image_tags_prefix}${application_version}-latest")
   fi
   if ! curl -s "https://hub.docker.com/v2/repositories/${username}/${repo}/tags/?page_size=100" \
@@ -62,7 +62,7 @@ if [[ "${VCS_BRANCH}" == "${PRODUCTION_BRANCH}" ]]; then
   fi
 elif [[ "${VCS_BRANCH}" == "develop" ]]; then
   image_tags=("develop-${image_tags_prefix}${application_version}-${image_version}")
-  if [[ -z "$GLPI_VERSION" ]]; then
+  if [[ -z "${GLPI_VERSION}" || -n "${UPDATE_LATEST}" ]]; then
     image_tags+=("develop-${image_tags_prefix}latest")
   fi
   publish=true

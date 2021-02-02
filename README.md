@@ -14,10 +14,6 @@ This images contains an instance of GLPI web application served by nginx and php
 
     * `nginx-72-9.5.3-latest`, `nginx-72-latest`
 
-* nginx and PHP5.6 embedded [Dockerfile](https://github.com/Turgon37/docker-glpi/blob/master/Dockerfile_nginx-56)
-
-    * `nginx-56-9.4.6-latest`, `nginx-56-latest`
-
 ## Docker Informations
 
 * This image expose the following ports
@@ -147,7 +143,7 @@ version: '2.1'
 services:
 
   glpi:
-    image: turgon37/glpi:nginx-56-latest
+    image: turgon37/glpi:nginx-72-latest
     environment:
       GLPI_REMOVE_INSTALLER: 'no'
       GLPI_INSTALL_PLUGINS: "
