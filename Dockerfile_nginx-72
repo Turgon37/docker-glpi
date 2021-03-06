@@ -124,7 +124,7 @@ COPY root/ /
 COPY /docker-entrypoint.sh /
 COPY /docker-entrypoint.d/* /docker-entrypoint.d/
 
-RUN chmod -R +x /docker-entrypoint.d/ \
+RUN chmod -R +x /docker-entrypoint.d/ /usr/local/bin/cronwrapper.py \
     && chmod -R g=rX,o=--- /var/www/* \
     && addgroup nginx www-data
 
