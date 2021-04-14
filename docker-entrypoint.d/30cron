@@ -2,8 +2,8 @@
 
 if [ "${GLPI_INTERNAL_CRON}" = 'yes' ]; then
 # Setup a cron schedule
-    echo "echo "* * * * * /usr/local/bin/php /var/www/front/cron.php > /dev/null 2>&1 &"
-    # This extra line makes it a valid cron" > scheduler.txt
+    echo "* * * * * /usr/local/bin/php /var/www/front/cron.php > /dev/null 2>&1 &
+# This extra line makes it a valid cron" > scheduler.txt
 
     crontab scheduler.txt
     cron -f
