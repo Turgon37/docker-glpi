@@ -8,7 +8,7 @@ echo 'Configuring GLPI files...'
 
 ## Remove installer
 # used to remove the installer after first installation
-if [ "x${GLPI_REMOVE_INSTALLER}" = 'xyes' ]; then
+if [ "${GLPI_REMOVE_INSTALLER}" = 'yes' ]; then
   echo 'Removing installer if needed...'
   rm -f "${basedir}/install/install.php"
 fi
@@ -26,7 +26,7 @@ done
 
 ## Files permissions
 # address issue https://github.com/Turgon37/docker-glpi/issues/2
-if [ "x${GLPI_CHMOD_PATHS_FILES}" = 'xyes' ]; then
+if [ "${GLPI_CHMOD_PATHS_FILES}" = 'yes' ]; then
   echo 'Set files permissions...'
   chown -R www-data:www-data "${basedir}/files"
   chmod -R u=rwX,g=rX,o=--- "${basedir}/files"
