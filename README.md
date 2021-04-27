@@ -12,8 +12,8 @@ This images contains an instance of GLPI web application served by nginx and php
 
 * nginx and PHP7.2 embedded [Dockerfile](https://github.com/Turgon37/docker-glpi/blob/master/Dockerfile_nginx-72)
 
+    * `nginx-72-9.5.5-latest`, `nginx-72-latest`
     * `nginx-72-9.5.4-latest`, `nginx-72-latest`
-    * `nginx-72-9.5.3-latest`, `nginx-72-latest`
 
 ## Docker Informations
 
