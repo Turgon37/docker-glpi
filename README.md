@@ -12,11 +12,8 @@ This images contains an instance of GLPI web application served by nginx and php
 
 * nginx and PHP7.2 embedded [Dockerfile](https://github.com/Turgon37/docker-glpi/blob/master/Dockerfile_nginx-72)
 
-    * `nginx-72-9.5.2-latest`, `nginx-72-latest`
-
-* nginx and PHP5.6 embedded [Dockerfile](https://github.com/Turgon37/docker-glpi/blob/master/Dockerfile_nginx-56)
-
-    * `nginx-56-9.4.6-latest`, `nginx-56-latest`
+    * `nginx-72-9.5.5-latest`, `nginx-72-latest`
+    * `nginx-72-9.5.4-latest`, `nginx-72-latest`
 
 ## Docker Informations
 
@@ -104,7 +101,7 @@ Please refer to the GLPI documentations to handle this at database level https:/
 ## Installation
 
 ```
-docker pull wolvverine/docker-glpi:latest
+docker pull wolvverine/docker-glpi:nginx-72-latest
 ```
 
 
@@ -115,7 +112,7 @@ The first time you run this image, set the GLPI_REMOVE_INSTALLER variable to 'no
 ### Without database link (you can use an ip address or a domain name in the installer gui)
 
 ```
-docker run --name glpi --publish 8000:80 --volume data-glpi:/var/www/files --volume data-glpi-config:/var/www/config wolvverine/docker-glpi:latest
+docker run --name glpi --publish 8000:80 --volume data-glpi:/var/www/files --volume data-glpi-config:/var/www/config wolvverine/docker-glpi:nginx-56-latest
 ```
 
 ### With database link (if you have any MySQL/MariaDB as a docker container)
@@ -135,7 +132,7 @@ docker run --name mysql -d --net glpi-network -e MYSQL_DATABASE=glpi -e MYSQL_US
 #### Start a GLPI instance
 
 ```
-docker run --name glpi --publish 8000:80 --volume data-glpi:/var/www/files --volume data-glpi-config:/var/www/config --net glpi-network wolvverine/docker-glpi:latest
+docker run --name glpi --publish 8000:80 --volume data-glpi:/var/www/files --volume data-glpi-config:/var/www/config --net glpi-network wolvverine/docker-glpi:nginx-56-latest
 ```
 
 ### Docker-compose Specific configuration examples
@@ -147,7 +144,7 @@ version: '2.1'
 services:
 
   glpi:
-    image: wolvverine/docker-glpi:latest
+    image: wolvverine/docker-glpi:nginx-72-latest
     environment:
       GLPI_REMOVE_INSTALLER: 'no'
       GLPI_INSTALL_PLUGINS: "

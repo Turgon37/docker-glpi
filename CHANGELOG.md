@@ -2,6 +2,11 @@
 
 Items starting with `DEPRECATE` are important deprecation notices.
 
+## 3.3.0 (2021-03-06)
+
++ Move cronwrapper from /opt/scripts to /usr/local/bin folder
++ DEPRECATE /opt/scripts/cronwrapper.py in favor to /usr/local/bin/cronwrapper.py
+
 ## 3.2.3 (2020-07-09)
 
 + Add bz2, intl, zip extensions for GLPI 9.5
