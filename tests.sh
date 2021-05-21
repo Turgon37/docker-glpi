@@ -36,7 +36,7 @@ fi
 
 # Download tools shim.
 if [[ ! -f _tools.sh ]]; then
-  curl -L -o "${PWD}/_tools.sh" https://gist.github.com/Turgon37/2ba8685893807e3637ea3879ef9d2062/raw
+  curl -L -o "${PWD}/_tools.sh" https://gist.github.com/Wolvverine/cd03f29d68600c8850aeed8fe2b3d464/raw/d954f55e63ecaac8d70461bb8de5e92c818c64e7/docker-image-tools.sh
 fi
 # shellcheck disable=SC1090
 source "${PWD}/_tools.sh"
