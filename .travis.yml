@@ -13,8 +13,8 @@ env:
     - secure: 'QhiF7/Zi7E2gAuW7p8ondB/cMS5dE3Hd1356bugZgC6Tpftp5MFEgmk2ecDwJG1mvDjie8+WCdBSm7a0dumFqsUwgtO7OkHhIj3v1QZTyH1LOFNlud2Yb7r0ed6JXYte8nnmAet1sxawHB3Il6euiM7eg8FjRuB24o3PH9SUzy9xNuerhYugpS0S94EyIzEpscpyJc2c6KIkANNIKMvwf2wm3uVBQJyEwZvEjT37C97vJaBi72G/m9xKl8MfsnGmThOn4jX8kmdPue8fDtCIu2DxvfW7eEWpAKAbQf35xV8fPLrLNCjhUSimPag4YpqvWhuIqT8bBS2dyZRS57D0PV3SMKrHASUUlkd+E0p8/wkWVv4w9scOcVuKwpAL0Z3MSBtk5AXswn2smweYjgQbNQPBjcN7aVNEmZMUxKu5DXyJy5WrhyZqwmyygraWV5SP7U5spBdvs70VSWfxtgQsq1F842tus768fNEffGobcVlnrfkWkZuj1YezqeTx3skPnonCBRDVaHb/zmD9OEP2+PiDEQseKB5VBv95ZmByeSg3QtCtpZFW+wyVI75JuMki9B/6MUkJ0rPRX9Tf7cDrUXGXfywN15DDP//4i+Fb+iZLxsoMQ0/gp5oMMh4ygf7h6SJbWa7Ve4atH27gVojAYYoaVRGkgyRslf5UiYWepLk='
   matrix:
     # Provide a list of GLPI version to build
-    - GLPI_VERSION=9.5.5 IMAGE_VARIANT=nginx-72 UPDATE_README=1
-    # - GLPI_VERSION=9.4.6 IMAGE_VARIANT=nginx-56
+    - GLPI_VERSION=9.5.5 IMAGE_VARIANT=nginx-72 UPDATE_README=1 UPDATE_LATEST=1
+    - GLPI_VERSION=9.5.4 IMAGE_VARIANT=nginx-72
 
 before_install:
     - sudo apt update
