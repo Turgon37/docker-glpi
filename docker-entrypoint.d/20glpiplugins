@@ -23,7 +23,7 @@ installPlugin() {
   if [ ! -f "${plugin_tmp_file}" ]; then
     echo "..downloading plugin '${plugin}' from '${url}'"
     if ! curl -sS --fail -o "${plugin_tmp_file}" -L "${url}"; then
-      echo "..#ERROR# failed to downalod plugin ${plugin} from url ${url}" 1>&2
+      echo "..#ERROR# failed to download plugin ${plugin} from url ${url}" 1>&2
       return 1
     fi
   fi
