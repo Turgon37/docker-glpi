@@ -32,6 +32,10 @@ installPlugin() {
   echo "..extracting plugin '${plugin_tmp_file}'"
   tar_options="--directory=${GLPI_PATHS_PLUGINS}"
   case "$plugin_tmp_file" in
+    *.tar)
+      # shellcheck disable=SC2086
+      tar ${tar_options} -x -f "${plugin_tmp_file}"
+      ;;
     *.tar.gz)
       # shellcheck disable=SC2086
       tar ${tar_options} -xz -f "${plugin_tmp_file}"
