@@ -26,7 +26,7 @@ if [[ -z "$DOCKERHUB_REGISTRY_USERNAME" || -z "$DOCKERHUB_REGISTRY_PASSWORD" ]];
   exit 1
 fi
 
-image_version=$(cat VERSION)
+image_version="$(cat VERSION | xargs)"
 
 if [[ -n ${IMAGE_VARIANT} ]]; then
   image_building_name="${DOCKER_IMAGE}:building_${IMAGE_VARIANT}"
