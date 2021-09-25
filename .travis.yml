@@ -15,6 +15,7 @@ env:
   matrix:
     # Provide a list of GLPI version to build
     - GLPI_VERSION=9.5.6 IMAGE_VARIANT=nginx-72 UPDATE_README=1 UPDATE_LATEST=1
+    - GLPI_VERSION=9.5.6 IMAGE_VARIANT=nginx-72 UPDATE_README=1 GLPI_PHP_XDEBUG=yes
 
 before_install:
     - sudo apt update
