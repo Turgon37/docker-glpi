@@ -6,4 +6,7 @@ session.auto_start=off
 session.use_trans_sid=0
 display_errors=stderr
 display_startup_errors=On
+{% if env('PHPFPM_DECORATE_WORKERS_OUTPUT') %}
+decorate_workers_output={{ env('PHPFPM_DECORATE_WORKERS_OUTPUT') }}
+{% endif %}
 memory_limit={{ env('PHP_MEMORY_LIMIT') }}
