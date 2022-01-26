@@ -135,6 +135,13 @@ docker run --name mysql -d --net glpi-network -e MYSQL_DATABASE=glpi -e MYSQL_US
 docker run --name glpi --publish 8000:80 --volume data-glpi:/var/www/files --volume data-glpi-config:/var/www/config --net glpi-network wolvverine/docker-glpi:nginx-56-latest
 ```
 
+#### Cron task on Docker host
+
+```
+*/5 * * * * root docker ps | grep --quiet 'glpi' && docker exec --user www-data glpi python3 /usr/local/bin/cronwrapper.py  --forward-stderr
+* */3 * * * root docker ps | grep --quiet 'glpi' && docker exec --user www-data glpi /var/www/bin/console -n glpi:ldap:synchronize_users --only-update-existing
+```
+
 ### Docker-compose Specific configuration examples
 
 * Production configuration with already installed GLPI with FusionInventory and dashboard plugin :
